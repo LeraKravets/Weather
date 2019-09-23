@@ -16,28 +16,48 @@ class NetworkManager {
 
     private init() {}
 
-    func loadForecast(completionHandler: @escaping ([String : Any]?) -> Void) {
+    func loadForecast(completionHandler: @escaping (WeatherItems?) -> Void) {
         guard let resourceURL = URL(string: resourceString) else { fatalError() }
-
         let dataTask = URLSession.shared.dataTask(with: resourceURL) { (data, _, error) in
-            guard let dataResponse = data,
-                error == nil else { return }
+            guard let jsonData = data, error == nil else { return }
+//            guard let json = try JSONSerialization.jsonObject(with: jsonData, options: .mutableContainers)
+//                as? [String: Any] else { return }
             do {
-                guard let json = try JSONSerialization.jsonObject(with: dataResponse, options: .mutableContainers)
-                    as? [String: Any] else { return }
-                guard let currentInfo = json["currently"] as? [String: Any] else { return }
-                print(currentInfo)
-                guard let dailyInfo = json["daily"] as? [String: Any] else { return }
-                print(dailyInfo)
-                guard let dailyData = dailyInfo["data"] as? [[String: Any]] else { return }
-                print(dailyData)
-                completionHandler(currentInfo)
+                let weatherResponse = try JSONDecoder().decode(WeatherItems.self, from: jsonData)
+                print(weatherResponse)
+                completionHandler(weatherResponse)
+
+//                as? [String: Any] else { return }
+
             } catch {
                 print(error)
             }
         }
         dataTask.resume()
     }
+
+//    func loadForecast(completionHandler: @escaping ([String : Any]?) -> Void) {
+//        guard let resourceURL = URL(string: resourceString) else { fatalError() }
+//
+//        let dataTask = URLSession.shared.dataTask(with: resourceURL) { (data, _, error) in
+//            guard let dataResponse = data,
+//                error == nil else { return }
+//            do {
+//                guard let json = try JSONSerialization.jsonObject(with: dataResponse, options: .mutableContainers)
+//                    as? [String: Any] else { return }
+//                guard let currentInfo = json["currently"] as? [String: Any] else { return }
+//                print(currentInfo)
+//                guard let dailyInfo = json["daily"] as? [String: Any] else { return }
+//                print(dailyInfo)
+//                guard let dailyData = dailyInfo["data"] as? [[String: Any]] else { return }
+//                print(dailyData)
+//                completionHandler(currentInfo)
+//            } catch {
+//                print(json)
+//            }
+//        }
+//        dataTask.resume()
+//    }
 
 
 }

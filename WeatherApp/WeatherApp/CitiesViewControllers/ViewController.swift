@@ -11,7 +11,7 @@ import UIKit
 class ViewController: UIViewController {
 
     // MARK: - Variables
-    var weatherItems: [WeatherItems] = []
+    var weatherItems: WeatherItems?
 
     public var cities = ["Minsk", "London"]
     private let cityCellID = "CityCellID"
@@ -28,7 +28,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
 
         NetworkManager.shared.loadForecast { [weak self] (weatherInformation) in
-            self?.weatherItems = weatherInformation?.compactMap { WeatherItems(weatherInfo: $0) } ?? []
+            self?.weatherItems = weatherInformation
         }
     }
 }

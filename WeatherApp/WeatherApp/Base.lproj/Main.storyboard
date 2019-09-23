@@ -18,10 +18,10 @@
             </objects>
             <point key="canvasLocation" x="-745" y="21"/>
         </scene>
-        <!--City InfoVC-->
+        <!--CityVC-->
         <scene sceneID="qBt-O0-VS9">
             <objects>
-                <viewController id="RVx-Tb-vy4" customClass="CityInfoVC" customModule="WeatherApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="RVx-Tb-vy4" customClass="CityVC" customModule="WeatherApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="MOa-Fg-nb8">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

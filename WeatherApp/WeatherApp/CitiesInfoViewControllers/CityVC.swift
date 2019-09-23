@@ -10,9 +10,9 @@ import UIKit
 
 class CityVC: UIViewController {
 
-    @IBOutlet weak var cityName: UILabel!
+    @IBOutlet weak var city: UILabel!
 
-    var weatherItems: [WeatherItems] = []
+    //var weatherItems: [WeatherItems] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
