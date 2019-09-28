@@ -18,6 +18,7 @@
 		CFA95C24233FEEAA001E4299 /* City+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFA95C1A233FEEAA001E4299 /* City+CoreDataProperties.swift */; };
 		CFA95C25233FEEAA001E4299 /* DailyWeather+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFA95C1B233FEEAA001E4299 /* DailyWeather+CoreDataClass.swift */; };
 		CFA95C26233FEEAA001E4299 /* DailyWeather+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFA95C1C233FEEAA001E4299 /* DailyWeather+CoreDataProperties.swift */; };
+		CFA95C28233FF72D001E4299 /* PersistanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFA95C27233FF72D001E4299 /* PersistanceManager.swift */; };
 		CFBDFF072330FE9900C50B4E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFBDFF062330FE9900C50B4E /* AppDelegate.swift */; };
 		CFBDFF092330FE9900C50B4E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFBDFF082330FE9900C50B4E /* ViewController.swift */; };
 		CFBDFF0C2330FE9900C50B4E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CFBDFF0A2330FE9900C50B4E /* Main.storyboard */; };
@@ -44,6 +45,7 @@
 		CFA95C1A233FEEAA001E4299 /* City+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "City+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		CFA95C1B233FEEAA001E4299 /* DailyWeather+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DailyWeather+CoreDataClass.swift"; sourceTree = "<group>"; };
 		CFA95C1C233FEEAA001E4299 /* DailyWeather+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DailyWeather+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		CFA95C27233FF72D001E4299 /* PersistanceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistanceManager.swift; sourceTree = "<group>"; };
 		CFBDFF032330FE9900C50B4E /* WeatherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CFBDFF062330FE9900C50B4E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CFBDFF082330FE9900C50B4E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -153,6 +155,7 @@
 				CFA95C1C233FEEAA001E4299 /* DailyWeather+CoreDataProperties.swift */,
 				CFBDFF3B2333A22500C50B4E /* WeatherItems.swift */,
 				CFBDFF3D233500ED00C50B4E /* NetworkManager.swift */,
+				CFA95C27233FF72D001E4299 /* PersistanceManager.swift */,
 				CFA95BFC233FEA4F001E4299 /* Model.xcdatamodeld */,
 			);
 			path = Model;
@@ -235,6 +238,7 @@
 				CFA95C1F233FEEAA001E4299 /* CurrentWeather+CoreDataClass.swift in Sources */,
 				CFBDFF1E2331090F00C50B4E /* AddCityTableViewCell.swift in Sources */,
 				CFA95C22233FEEAA001E4299 /* Country+CoreDataProperties.swift in Sources */,
+				CFA95C28233FF72D001E4299 /* PersistanceManager.swift in Sources */,
 				CFA95C25233FEEAA001E4299 /* DailyWeather+CoreDataClass.swift in Sources */,
 				CFBDFF322332B70700C50B4E /* CityVC.swift in Sources */,
 				CFBDFF2023310B3600C50B4E /* CityTableViewCell.swift in Sources */,
