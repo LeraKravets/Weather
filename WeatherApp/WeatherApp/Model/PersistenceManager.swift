@@ -1,5 +1,5 @@
 //
-//  PersistanceManager.swift
+//  PersistenceManager.swift
 //  WeatherApp
 //
 //  Created by Лера on 9/28/19.
