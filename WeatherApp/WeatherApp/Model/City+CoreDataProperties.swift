@@ -23,5 +23,4 @@ extension City {
     @NSManaged public var currentWeather: CurrentWeather?
     @NSManaged public var dailyWeathert: DailyWeather?
     @NSManaged public var location: Location?
-
 }
