@@ -17,8 +17,6 @@ class NetworkManager {
 //    var city = "Minsk"
 
     func loadCurrentWeather(targetCity: String, completionHandler: @escaping ([String: Any]?) -> Void) {
-//        let personalAPI = "5fd0c255bfc224e83c8160bb7241d760"
-        //let resourceString =  "https://community-open-weather-map.p.rapidapi.com/forecast?q=\(city)"
         let resourceString =  "https://api.openweathermap.org/data/2.5/weather?q=\(targetCity)&APPID=5fd0c255bfc224e83c8160bb7241d760"
 
         guard let resourceURL = URL(string: resourceString) else { fatalError() }

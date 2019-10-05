@@ -31,26 +31,38 @@ class SearchViewController: UIViewController {
     var citiesNameArr: [String] = []
     var searchCity: [String] = []
     var searching = false
+
 //    var targetCity: String?
 
     // MARK: - Life Cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        loudJsonData(filename: "city.list.min")
     }
 
     // MARK: - Parsing local JSON file   "city.list.min"
 
-    func loudJsonData(filename fileName: String) -> [[String: Any]]? {
-        guard let url = Bundle.main.url(forResource: fileName, withExtension: "json") else { fatalError() }
-        do {
-            let jsonData = try Data(contentsOf: url)
-            guard let json = try JSONSerialization.jsonObject(with: jsonData) as? [[String: Any]] else { return nil }
-            return json
-        } catch {
-            print(error)
+    func loudJsonData(filename fileName: String)  {
+        DispatchQueue.global().async {
+            guard let url = Bundle.main.url(forResource: fileName, withExtension: "json") else { fatalError() }
+            do {
+                let jsonData = try Data(contentsOf: url)
+                guard
+                    let json = try JSONSerialization.jsonObject(with: jsonData) as? [[String: Any]]
+                else { return }
+
+                DispatchQueue.main.async {
+                    self.citiesInfo = json
+                    self.citiesNameArr = self.citiesInfo?.compactMap({ $0["name"] }) as? [String] ?? []
+                    self.resultsTableView.reloadData()
+                }
+
+            } catch {
+                print(error)
+            }
+
         }
-    	return nil
     }
 
 //    func loudJsonData(complitionHandler: @escaping ([[String: Any]]?) -> Void) {
@@ -71,8 +83,6 @@ class SearchViewController: UIViewController {
 extension SearchViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        citiesInfo = loudJsonData(filename: "city.list.min")
-        citiesNameArr = citiesInfo?.compactMap({ $0["name"] }) as? [String] ?? []
         if searching {
             return searchCity.count
         } else {

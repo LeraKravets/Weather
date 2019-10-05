@@ -4,7 +4,7 @@
         <attribute name="cityId" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="cityName" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="country" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Country" inverseName="city" inverseEntity="Country" syncable="YES"/>
-        <relationship name="currentWeather" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CurrentWeather" inverseName="city" inverseEntity="CurrentWeather" syncable="YES"/>
+        <relationship name="currentWeather" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="CurrentWeather" inverseName="city" inverseEntity="CurrentWeather" syncable="YES"/>
         <relationship name="dailyWeathert" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DailyWeather" inverseName="city" inverseEntity="DailyWeather" syncable="YES"/>
         <relationship name="location" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Location" inverseName="city" inverseEntity="Location" syncable="YES"/>
     </entity>
@@ -37,10 +37,10 @@
         <relationship name="city" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="City" inverseName="location" inverseEntity="City" syncable="YES"/>
     </entity>
     <elements>
-        <element name="City" positionX="-63" positionY="-18" width="128" height="135"/>
-        <element name="Country" positionX="-54" positionY="-9" width="128" height="90"/>
-        <element name="CurrentWeather" positionX="-36" positionY="18" width="128" height="165"/>
-        <element name="DailyWeather" positionX="-18" positionY="81" width="128" height="135"/>
-        <element name="Location" positionX="0" positionY="108" width="128" height="90"/>
+        <element name="City" positionX="-139.625" positionY="-25.84375" width="128" height="133"/>
+        <element name="Country" positionX="-336.49609375" positionY="102.33984375" width="128" height="90"/>
+        <element name="CurrentWeather" positionX="15.2734375" positionY="316.57421875" width="128" height="165"/>
+        <element name="DailyWeather" positionX="-202.73046875" positionY="338.6953125" width="128" height="135"/>
+        <element name="Location" positionX="83.71875" positionY="146.671875" width="128" height="90"/>
     </elements>
 </model>
