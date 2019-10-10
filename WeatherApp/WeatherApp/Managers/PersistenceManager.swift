@@ -17,6 +17,7 @@ class PersistenceManager {
 
     func saveCurrentWeatherInfo(info: [String: Any]) {
         print(info)
+
         let locationInfo = info["coord"] as? [String: Any]
         let latitude = locationInfo?["lat"] as? Double
         let longitude = locationInfo?["lon"] as? Double
@@ -25,8 +26,9 @@ class PersistenceManager {
         let countryId = countryInfo?["id"] as? Int16
         let countryName = countryInfo?["country"] as? String
 
-        let cityId = info["id"] as? Int16
+        guard let cityId = info["id"] as? Int else { return }
         let cityName = info["name"] as? String
+        let cityTime = info["dt"] as? Double
 
         let currentWeatherInfo = info["weather"] as? [String: Any]
         let currentIcon = currentWeatherInfo?["icon"] as? String
@@ -38,12 +40,29 @@ class PersistenceManager {
         let tempMin = currentMainInfo?["temp_min"] as? Double
         let tempMax = currentMainInfo?["temp_max"] as? Double
 
-        let city = NSEntityDescription.insertNewObject(forEntityName: "City",
-                                                       into: context) as? City
-        city?.cityName = cityName
-        if let cityId = cityId {
-            city?.cityId = cityId
+		// Saving/updating City Entity
+
+        var city: City?
+
+		let request = NSFetchRequest<NSFetchRequestResult>(entityName: "City")
+        request.predicate = NSPredicate(format: "cityId = %li", cityId)
+        do {
+            let cities = try? context.fetch(request) as? [City]
+			city = cities?.first
         }
+
+        if city == nil {
+            city = NSEntityDescription.insertNewObject(forEntityName: "City",
+                                                       into: context) as? City
+        }
+        city?.cityName = cityName
+        city?.cityId = cityId
+
+        if let cityTime = cityTime {
+            city?.time = getDateFromStamp(timeInterval: cityTime)
+        }
+
+        // Saving/updating Country Entity
 
         let country = NSEntityDescription.insertNewObject(forEntityName: "Country",
                                                           into: context) as? Country
@@ -52,12 +71,18 @@ class PersistenceManager {
             country?.countryId = countryId
         }
 
-        let location = NSEntityDescription.insertNewObject(forEntityName: "Location",
-                                                           into: context) as? Location
-        if let latitude = latitude, let longitude = longitude {
-            location?.latitude = latitude
-            location?.longitude = longitude
+        // Saving/updating Location Entity
+
+        if city?.location == nil {
+            city?.location = NSEntityDescription.insertNewObject(forEntityName: "Location",
+                                                               into: context) as? Location
         }
+        if let latitude = latitude, let longitude = longitude {
+            city?.location?.latitude = latitude
+            city?.location?.longitude = longitude
+        }
+
+        // Saving/updating CurrentWeather Entity
 
         let currentWeather = NSEntityDescription.insertNewObject(forEntityName: "CurrentWeather", into: context) as? CurrentWeather
         currentWeather?.currentIcon = currentIcon
@@ -71,6 +96,16 @@ class PersistenceManager {
         }
         saveContext()
     }
+
+
+//    func updateCityInfo(in array: inout [City], by index: Int) {
+//        let item = array[index]
+//        for item.cityId in array {
+//
+//        }
+//        item.cityId
+//    }
+
 
     // MARK: - Core Data Fetching support
 
@@ -96,9 +131,10 @@ class PersistenceManager {
         return []
     }
 
+
     // MARK: - Core Data Deleting support
 
-    func deleteCityInfoItem(in array: inout [City], by index: Int){
+    func deleteCityInfoItem(in array: inout [City], by index: Int) {
         let item = array[index]
         context.delete(item)
         array.remove(at: index)
@@ -133,5 +169,16 @@ class PersistenceManager {
                 fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
             }
         }
+    }
+
+    // MARK: - Helper methods
+
+    func getDateFromStamp(timeInterval: Double) -> String{
+        let date = NSDate(timeIntervalSince1970: TimeInterval(timeInterval))
+        let dateFormatter = DateFormatter()
+        let dateFormat = "hh:mm" //EEEEEEEEEE, yyyy, MMM dd
+        dateFormatter.dateFormat = dateFormat
+        let dateString = dateFormatter.string(from: date as Date)
+        return dateString
     }
 }

@@ -22,7 +22,12 @@ class CityTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
+//        getCurrentTime()
     }
+
+//    private func getCurrentTime() {
+//        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector:#selector(self.update) , userInfo: nil, repeats: true)
+//    }
 
     // MARK: - Life Cycle
 
@@ -33,6 +38,7 @@ class CityTableViewCell: UITableViewCell {
     func update(with weatherItem: CurrentWeather, and cityItem: City) {
         temperatureLabel.text = String(Int(weatherItem.currentTemp - 273.15))
         cityNameLabel.text = cityItem.cityName
+        timeLabel.text = cityItem.time
     }
 
     // MARK: - Actions

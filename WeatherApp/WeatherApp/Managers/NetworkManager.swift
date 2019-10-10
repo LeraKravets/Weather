@@ -14,8 +14,6 @@ class NetworkManager {
 
     private init() {}
 
-//    var city = "Minsk"
-
     func loadCurrentWeather(targetCity: String, completionHandler: @escaping ([String: Any]?) -> Void) {
         let resourceString =  "https://api.openweathermap.org/data/2.5/weather?q=\(targetCity)&APPID=5fd0c255bfc224e83c8160bb7241d760"
 

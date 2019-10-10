@@ -38,6 +38,7 @@ class SearchViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+      
         loudJsonData(filename: "city.list.min")
     }
 
