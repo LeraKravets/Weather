@@ -30,9 +30,10 @@ class PersistenceManager {
         let cityName = info["name"] as? String
         let cityTime = info["dt"] as? Double
 
-        let currentWeatherInfo = info["weather"] as? [String: Any]
-        let currentIcon = currentWeatherInfo?["icon"] as? String
-        let summary = currentWeatherInfo?["main"] as? String
+        let currentWeatherInfo = info["weather"] as? [[String: Any]]
+        let currentIconInfo = currentWeatherInfo?[0] as? [String: Any]
+        let currentIcon = currentIconInfo?["icon"] as? String
+        let summary = currentIconInfo?["main"] as? String
         let currentMainInfo = info["main"] as? [String: Any]
         let currentTemp = currentMainInfo?["temp"] as? Double
         let humidity = currentMainInfo?["humidity"] as? Double
@@ -57,7 +58,6 @@ class PersistenceManager {
         }
         city?.cityName = cityName
         city?.cityId = cityId
-
         if let cityTime = cityTime {
             city?.time = getDateFromStamp(timeInterval: cityTime)
         }
@@ -84,28 +84,33 @@ class PersistenceManager {
 
         // Saving/updating CurrentWeather Entity
 
-        let currentWeather = NSEntityDescription.insertNewObject(forEntityName: "CurrentWeather", into: context) as? CurrentWeather
-        currentWeather?.currentIcon = currentIcon
-        currentWeather?.summary = summary
-        if let currentTemp = currentTemp, let tempMin = tempMin, let tempMax = tempMax, let humidity = humidity, let pressure = pressure {
-            currentWeather?.currentTemp = currentTemp - 273.15
-            currentWeather?.tempMin = tempMin - 273.15
-            currentWeather?.tempMax = tempMax - 273.15
-            currentWeather?.humidity = humidity
-            currentWeather?.pressure = pressure
+        if city?.currentWeather == nil {
+            city?.currentWeather = NSEntityDescription.insertNewObject(forEntityName: "CurrentWeather", into: context) as? CurrentWeather
         }
+        city?.currentWeather?.currentIcon = currentIcon
+        city?.currentWeather?.summary = summary
+        if let currentTemp = currentTemp, let tempMin = tempMin, let tempMax = tempMax, let humidity = humidity, let pressure = pressure {
+            city?.currentWeather?.currentTemp = currentTemp - 273.15
+            city?.currentWeather?.tempMin = tempMin - 273.15
+            city?.currentWeather?.tempMax = tempMax - 273.15
+            city?.currentWeather?.humidity = humidity
+            city?.currentWeather?.pressure = pressure
+        }
+
+//        let currentWeather = NSEntityDescription.insertNewObject(forEntityName: "CurrentWeather", into: context) as? CurrentWeather
+//        currentWeather?.currentIcon = currentIcon
+//        currentWeather?.summary = summary
+//        if let currentTemp = currentTemp, let tempMin = tempMin, let tempMax = tempMax, let humidity = humidity, let pressure = pressure {
+//            currentWeather?.currentTemp = currentTemp - 273.15
+//            currentWeather?.tempMin = tempMin - 273.15
+//            currentWeather?.tempMax = tempMax - 273.15
+//            currentWeather?.humidity = humidity
+//            currentWeather?.pressure = pressure
+//        }
+
+
         saveContext()
     }
-
-
-//    func updateCityInfo(in array: inout [City], by index: Int) {
-//        let item = array[index]
-//        for item.cityId in array {
-//
-//        }
-//        item.cityId
-//    }
-
 
     // MARK: - Core Data Fetching support
 
@@ -137,7 +142,13 @@ class PersistenceManager {
     func deleteCityInfoItem(in array: inout [City], by index: Int) {
         let item = array[index]
         context.delete(item)
-        array.remove(at: index)
+//        array.remove(at: index)
+        saveContext()
+    }
+
+    func deleteWeatherInfoItem(in array: inout [CurrentWeather], by index: Int) {
+        let item = array[index]
+        context.delete(item)
         saveContext()
     }
 

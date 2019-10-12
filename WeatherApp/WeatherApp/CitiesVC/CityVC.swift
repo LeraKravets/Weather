@@ -29,12 +29,8 @@ class CityVC: UIViewController {
 
         cityLabel.text = city?.cityName
         summaryLabel.text = currentWeather?.summary
-//        summaryLabel.text = city?.currentWeather?.summary
         guard let currentTemp = currentWeather?.currentTemp else { return }
-        tempLabel.text = "\(currentTemp)" 
-
-//        guard let currentTemp = city?.currentWeather?.currentTemp else { return }
-//        tempLabel.text = String(format: "%@", currentTemp)
+        tempLabel.text = String(Int(currentTemp))
 
 //        setupPageController()
 //

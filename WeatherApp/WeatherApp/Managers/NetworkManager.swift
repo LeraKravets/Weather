@@ -32,4 +32,23 @@ class NetworkManager {
         }
         dataTask.resume()
     }
+
+    func loadDailyWeather(targetCity: String, completionHandler: @escaping ([String: Any]?) -> Void) {
+        let resourceString =  "https://api.weatherbit.io/v2.0/forecast/daily?city=\(targetCity)&key=b883a022667c489090772840866e0102"
+
+        guard let resourceURL = URL(string: resourceString) else { fatalError() }
+
+        let dataTask = URLSession.shared.dataTask(with: resourceURL) { (data, _, error) in
+            guard let jsonData = data, error == nil else { return }
+            do {
+                guard let json = try JSONSerialization.jsonObject(with: jsonData, options: .mutableContainers)
+                    as? [String: Any] else { return }
+                print(json)
+                completionHandler(json)
+            } catch {
+                print(error)
+            }
+        }
+        dataTask.resume()
+    }
 }

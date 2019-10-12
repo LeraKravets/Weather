@@ -54,16 +54,20 @@ extension CitiesPVC: UIPageViewControllerDataSource, UIPageViewControllerDelegat
         guard let index = arrayCityVC.firstIndex(of: currentVC) else { return nil }
         if index > 0 {
             return arrayCityVC[index - 1]
+        } else if index == 0 {
+            return arrayCityVC[cities.count-1]
         }
         return nil
     }
 
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-//        return UIViewController()
         guard let currentVC = viewController as? CityVC else { return nil }
         guard let index = arrayCityVC.firstIndex(of: currentVC) else { return nil }
-        if index < cities.count {
-            return arrayCityVC[index + 1]
+        let nextCityIndex = index + 1
+        if nextCityIndex < cities.count {
+            return arrayCityVC[nextCityIndex]
+        } else if nextCityIndex == cities.count {
+            return arrayCityVC.first
         }
         return nil
     }
