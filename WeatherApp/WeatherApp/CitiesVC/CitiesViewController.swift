@@ -77,20 +77,20 @@ class CitiesViewController: UIViewController {
                 self.cityInfo = PersistenceManager.shared.fetchCityInfo()
             }
 
-            if !self.cityInfo.isEmpty {
-
-                guard let id = weatherCurrentInfo["id"] as? Int else { return }
-
-                let ids = self.cityInfo.map { $0.cityId }
-
-//                if ids.contains(id) {
-//                    // TODO: update
-//                } else {
-                    saveData()
-//                }
-            } else {
-                saveData()
-            }
+//            if !self.cityInfo.isEmpty {
+//
+//                guard let id = weatherCurrentInfo["id"] as? Int else { return }
+//
+//                let ids = self.cityInfo.map { $0.cityId }
+//
+////                if ids.contains(id) {
+////                    // TODO: update
+////                } else {
+//                    saveData()
+////                }
+//            } else {
+//                saveData()
+//            }
 
             DispatchQueue.main.async {
                 self.citiesTableView.reloadData()
@@ -128,10 +128,11 @@ class CitiesViewController: UIViewController {
         self.present(searchVC, animated: true, completion: nil)
     }
 
-    func goToCity(cities: [City]) {
+    func goToCity(cities: [City], index: Int) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         guard let citiesPVC = storyboard.instantiateViewController(withIdentifier: "CitiesPVC") as? CitiesPVC else { return }
         citiesPVC.cities = cities
+        citiesPVC.initialIndex = index
         self.present(citiesPVC, animated: true, completion: nil)
     }
 
@@ -221,7 +222,7 @@ extension CitiesViewController: UITableViewDelegate {
         }
         switch sectionIndex {
         case .cityInfo:
-            goToCity(cities: cityInfo)
+            goToCity(cities: cityInfo, index: indexPath.row)
         case .newCity:
             return
         }

@@ -11,14 +11,15 @@ import UIKit
 class CitiesPVC: UIPageViewController {
 
     var cities = [City]()
+    var initialIndex: Int?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.dataSource = self
         self.delegate = self
 
-        guard let visinleCityVC = arrayCityVC.first else { return }
-        setViewControllers([visinleCityVC], direction: .forward, animated: true, completion: nil)
+        guard let index = initialIndex else { return }
+        setViewControllers([arrayCityVC[index]], direction: .forward, animated: true, completion: nil)
     }
 	// MARK: - Create VC
     lazy var arrayCityVC: [CityVC] = {
