@@ -46,22 +46,22 @@ class CitiesViewController: UIViewController {
 
     // MARK: - Helper Methods
 
-    func loadData(cityName: String) {
-
-        NetworkManager.shared.loadCurrentWeather(targetCity: cityName) { [weak self] (weatherInformation) in
-
-            guard let self = self, let weatherCurrentInfo = weatherInformation else { return }
-
-            PersistenceManager.shared.saveCurrentWeatherInfo(info: weatherCurrentInfo)
-
-            self.weatherItems = PersistenceManager.shared.fetchCurrentWeather()
-            self.cityInfo = PersistenceManager.shared.fetchCityInfo()
-
-            DispatchQueue.main.async {
-                    self.citiesTableView.reloadData()
-        	}
-        }
-    }
+//    func loadData(cityName: String) {
+//
+//        NetworkManager.shared.loadCurrentWeather(targetCity: cityName) { [weak self] (weatherInformation) in
+//
+//            guard let self = self, let weatherCurrentInfo = weatherInformation else { return }
+//
+//            PersistenceManager.shared.saveCurrentWeatherInfo(info: weatherCurrentInfo)
+//
+//            self.weatherItems = PersistenceManager.shared.fetchCurrentWeather()
+//            self.cityInfo = PersistenceManager.shared.fetchCityInfo()
+//
+//            DispatchQueue.main.async {
+//                    self.citiesTableView.reloadData()
+//            }
+//        }
+//    }
 
 
     func loadNewCityData(cityName: String) {
@@ -92,6 +92,7 @@ class CitiesViewController: UIViewController {
 //                saveData()
 //            }
 
+            saveData()
             DispatchQueue.main.async {
                 self.citiesTableView.reloadData()
             }
@@ -128,11 +129,12 @@ class CitiesViewController: UIViewController {
         self.present(searchVC, animated: true, completion: nil)
     }
 
-    func goToCity(cities: [City], index: Int) {
+    func goToCity(cities: [City], currentWeather: [CurrentWeather], index: Int) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         guard let citiesPVC = storyboard.instantiateViewController(withIdentifier: "CitiesPVC") as? CitiesPVC else { return }
         citiesPVC.cities = cities
         citiesPVC.initialIndex = index
+        citiesPVC.currentWeather = currentWeather
         self.present(citiesPVC, animated: true, completion: nil)
     }
 
@@ -222,7 +224,7 @@ extension CitiesViewController: UITableViewDelegate {
         }
         switch sectionIndex {
         case .cityInfo:
-            goToCity(cities: cityInfo, index: indexPath.row)
+            goToCity(cities: cityInfo, currentWeather: weatherItems, index: indexPath.row)
         case .newCity:
             return
         }

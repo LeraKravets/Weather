@@ -13,10 +13,13 @@ class CityVC: UIViewController {
     @IBOutlet weak var cityLabel: UILabel!
     @IBOutlet weak var summaryLabel: UILabel!
     @IBOutlet weak var tempLabel: UILabel!
-
+    @IBOutlet weak var iconView: UIImageView!
     @IBOutlet weak var backgroundView: UIImageView!
 
     var city: City?
+    var currentWeather: CurrentWeather?
+
+
     //    var controllers = [UIViewController]()
 //    var currentVCIndex = 0
 
@@ -25,7 +28,14 @@ class CityVC: UIViewController {
         super.viewDidLoad()
 
         cityLabel.text = city?.cityName
-        summaryLabel.text = city?.currentWeather?.summary
+        summaryLabel.text = currentWeather?.summary
+//        summaryLabel.text = city?.currentWeather?.summary
+        guard let currentTemp = currentWeather?.currentTemp else { return }
+        tempLabel.text = "\(currentTemp)" 
+
+//        guard let currentTemp = city?.currentWeather?.currentTemp else { return }
+//        tempLabel.text = String(format: "%@", currentTemp)
+
 //        setupPageController()
 //
 //        pageController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
