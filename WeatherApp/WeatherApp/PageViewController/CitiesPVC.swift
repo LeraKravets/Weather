@@ -17,7 +17,8 @@ class CitiesPVC: UIPageViewController {
         self.dataSource = self
         self.delegate = self
 
-        setViewControllers([arrayCityVC[0]], direction: .forward, animated: true, completion: nil)
+        guard let visinleCityVC = arrayCityVC.first else { return }
+        setViewControllers([visinleCityVC], direction: .forward, animated: true, completion: nil)
     }
 	// MARK: - Create VC
     lazy var arrayCityVC: [CityVC] = {
@@ -54,7 +55,7 @@ extension CitiesPVC: UIPageViewControllerDataSource, UIPageViewControllerDelegat
     }
 
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-        return UIViewController()
+//        return UIViewController()
         guard let currentVC = viewController as? CityVC else { return nil }
         guard let index = arrayCityVC.firstIndex(of: currentVC) else { return nil }
         if index < cities.count {
