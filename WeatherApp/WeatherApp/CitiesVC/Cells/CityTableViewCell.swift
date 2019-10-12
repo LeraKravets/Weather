@@ -36,7 +36,7 @@ class CityTableViewCell: UITableViewCell {
     }
 
     func update(with weatherItem: CurrentWeather, and cityItem: City) {
-        temperatureLabel.text = String(Int(weatherItem.currentTemp - 273.15))
+        temperatureLabel.text = String(Int(weatherItem.currentTemp))
         cityNameLabel.text = cityItem.cityName
         timeLabel.text = cityItem.time
     }

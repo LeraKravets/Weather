@@ -88,9 +88,9 @@ class PersistenceManager {
         currentWeather?.currentIcon = currentIcon
         currentWeather?.summary = summary
         if let currentTemp = currentTemp, let tempMin = tempMin, let tempMax = tempMax, let humidity = humidity, let pressure = pressure {
-            currentWeather?.currentTemp = currentTemp 
-            currentWeather?.tempMin = tempMin
-            currentWeather?.tempMax = tempMax
+            currentWeather?.currentTemp = currentTemp - 273.15
+            currentWeather?.tempMin = tempMin - 273.15
+            currentWeather?.tempMax = tempMax - 273.15
             currentWeather?.humidity = humidity
             currentWeather?.pressure = pressure
         }
