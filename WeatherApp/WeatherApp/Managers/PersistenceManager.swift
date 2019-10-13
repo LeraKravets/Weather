@@ -28,7 +28,7 @@ class PersistenceManager {
 
         guard let cityId = info["id"] as? Int else { return }
         let cityName = info["name"] as? String
-        let cityTime = info["dt"] as? Double
+        let cityTime = info["dt"] as? Int
 
         let currentWeatherInfo = info["weather"] as? [[String: Any]]
         let currentIconInfo = currentWeatherInfo?[0] as? [String: Any]
@@ -97,18 +97,6 @@ class PersistenceManager {
             city?.currentWeather?.pressure = pressure
         }
 
-//        let currentWeather = NSEntityDescription.insertNewObject(forEntityName: "CurrentWeather", into: context) as? CurrentWeather
-//        currentWeather?.currentIcon = currentIcon
-//        currentWeather?.summary = summary
-//        if let currentTemp = currentTemp, let tempMin = tempMin, let tempMax = tempMax, let humidity = humidity, let pressure = pressure {
-//            currentWeather?.currentTemp = currentTemp - 273.15
-//            currentWeather?.tempMin = tempMin - 273.15
-//            currentWeather?.tempMax = tempMax - 273.15
-//            currentWeather?.humidity = humidity
-//            currentWeather?.pressure = pressure
-//        }
-
-
         saveContext()
     }
 
@@ -157,6 +145,9 @@ class PersistenceManager {
     var context: NSManagedObjectContext {
         return persistantContainer.viewContext
     }
+    var context2: NSManagedObjectContext {
+        return persistantContainer.viewContext
+    }
 
     lazy var persistantContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "Model")
@@ -184,12 +175,61 @@ class PersistenceManager {
 
     // MARK: - Helper methods
 
-    func getDateFromStamp(timeInterval: Double) -> String{
+    func getDateFromStamp(timeInterval: Int) -> String{
         let date = NSDate(timeIntervalSince1970: TimeInterval(timeInterval))
         let dateFormatter = DateFormatter()
         let dateFormat = "hh:mm" //EEEEEEEEEE, yyyy, MMM dd
         dateFormatter.dateFormat = dateFormat
         let dateString = dateFormatter.string(from: date as Date)
         return dateString
+    }
+
+    func saveDailyWeatherInfo(info: [String: Any]) {
+        print(info)
+
+        let dailyWeatherInfo = info["data"] as? [[String: Any]]
+        let dailyMainInfo = dailyWeatherInfo?[0]
+        guard let dailyMinTemp = dailyMainInfo?["min_temp"] as? Double else { return }
+        guard let dailyMaxTemp = dailyMainInfo?["max_temp"] as? Double else { return }
+        let dailyDate = dailyMainInfo?["ts"] as? Int
+        let dailyWeatherAdditionalInfo = dailyMainInfo?["weather"] as? [String: Any]
+        let dailyWeatherIcon = dailyWeatherAdditionalInfo?["icon"] as? String
+        guard let cityName = info["city_name"] as? String else { return }
+
+        // Saving/updating DailyWeather Entity
+
+        var dailyWeather: DailyWeather?
+
+        let dailyWeatherRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "DailyWeather")
+        dailyWeatherRequest.predicate = NSPredicate(format: "cityName = %@", cityName)
+        do {
+            let dailyWeatherArray = try? context2.fetch(dailyWeatherRequest) as? [DailyWeather]
+            dailyWeather = dailyWeatherArray?.first
+        }
+
+        if dailyWeather == nil {
+            dailyWeather = NSEntityDescription.insertNewObject(forEntityName: "DailyWeather",
+                                                       into: context2) as? DailyWeather
+        }
+
+        dailyWeather?.tempMin = dailyMinTemp
+        dailyWeather?.tempMax = dailyMaxTemp
+        dailyWeather?.dailyIcon = dailyWeatherIcon
+
+        if let dailyDate = dailyDate {
+            dailyWeather?.date = getDateFromStamp(timeInterval: dailyDate)
+        }
+        saveContext()
+    }
+
+    func fetchDailyWeather() -> [DailyWeather] {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "DailyWeather")
+        do {
+            let item = try context2.fetch(fetchRequest) as? [DailyWeather]
+            return item ?? []
+        } catch let error {
+            print(error)
+        }
+        return []
     }
 }

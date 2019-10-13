@@ -18,6 +18,7 @@ class CityVC: UIViewController {
 
     var city: City?
     var currentWeather: CurrentWeather?
+    var dailyWeather: DailyWeather?
 
 
     //    var controllers = [UIViewController]()
