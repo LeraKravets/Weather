@@ -11,8 +11,6 @@ import UIKit
 class CitiesPVC: UIPageViewController {
 
     var cities = [City]()
-    var currentWeather = [CurrentWeather]()
-    var dailyWeather = [DailyWeather]()
     var initialIndex: Int?
 
     override func viewDidLoad() {
@@ -29,11 +27,7 @@ class CitiesPVC: UIPageViewController {
         for city in cities {
             if let cityVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CityVC") as? CityVC {
                 cityVC.city = city
-                if let index = cities.firstIndex(of: city) {
-                    cityVC.currentWeather = currentWeather[index]
-                    cityVC.dailyWeather = dailyWeather[index]
-                    citiesVC.append(cityVC)
-                }
+                citiesVC.append(cityVC)
             }
         }
         return citiesVC

@@ -17,8 +17,8 @@ class CityVC: UIViewController {
     @IBOutlet weak var backgroundView: UIImageView!
 
     var city: City?
-    var currentWeather: CurrentWeather?
-    var dailyWeather: DailyWeather?
+//    var currentWeather: CurrentWeather?
+//    var dailyWeather: DailyWeather?
 
 
     //    var controllers = [UIViewController]()
@@ -29,8 +29,9 @@ class CityVC: UIViewController {
         super.viewDidLoad()
 
         cityLabel.text = city?.cityName
-        summaryLabel.text = currentWeather?.summary
-        guard let currentTemp = currentWeather?.currentTemp else { return }
+        summaryLabel.text = city?.currentWeather?.summary
+        guard let currentTemp = city?.currentWeather?.currentTemp else { return }
+        let dailyTemp = city?.dailyWeathert?.dailyTemp
         tempLabel.text = String(Int(currentTemp))
 
 //        setupPageController()
