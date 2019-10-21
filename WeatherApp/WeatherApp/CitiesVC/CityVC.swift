@@ -31,7 +31,7 @@ class CityVC: UIViewController {
         cityLabel.text = city?.cityName
         summaryLabel.text = city?.currentWeather?.summary
         guard let currentTemp = city?.currentWeather?.currentTemp else { return }
-        let dailyTemp = city?.dailyWeathert?.dailyTemp
+//        let dailyTemp = city?.dailyWeathert?.dailyTemp
         tempLabel.text = String(Int(currentTemp))
 
 //        setupPageController()

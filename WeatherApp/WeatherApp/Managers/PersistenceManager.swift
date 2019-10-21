@@ -26,7 +26,7 @@ class PersistenceManager {
         let countryId = countryInfo?["id"] as? Int16
         let countryName = countryInfo?["country"] as? String
 
-        guard let cityId = currentInfo["id"] as? Int else { return }
+        guard let cityId = currentInfo["id"] as? Int64 else { return }
         let cityName = currentInfo["name"] as? String
         let cityTime = currentInfo["dt"] as? Int
 
@@ -41,13 +41,27 @@ class PersistenceManager {
         let tempMin = currentMainInfo?["temp_min"] as? Double
         let tempMax = currentMainInfo?["temp_max"] as? Double
 
-        let dailyWeatherInfo = dailyInfo["data"] as? [[String: Any]]
-        let dailyMainInfo = dailyWeatherInfo?[0]
-        guard let dailyMinTemp = dailyMainInfo?["min_temp"] as? Double else { return }
-        guard let dailyMaxTemp = dailyMainInfo?["max_temp"] as? Double else { return }
-        let dailyDate = dailyMainInfo?["ts"] as? Int
-        let dailyWeatherAdditionalInfo = dailyMainInfo?["weather"] as? [String: Any]
-        let dailyWeatherIcon = dailyWeatherAdditionalInfo?["icon"] as? String
+        guard let dailyWeatherInfo = dailyInfo["data"] as? [[String: Any]] else { return }
+
+//        var dailyWeatherArray: [DailyWeatherStruct] = []
+//
+//        for currentDailyWeather in dailyWeatherInfo {
+//            var dailyWeather = DailyWeatherStruct()
+//            dailyWeather.dailyMinTemp = currentDailyWeather["min_temp"] as? Double
+//            dailyWeather.dailyMaxTemp = currentDailyWeather["max_temp"] as? Double
+//            dailyWeather.dailyDate = currentDailyWeather["ts"] as? Int
+//            let dailyWeatherAdditionalInfo = currentDailyWeather["weather"] as? [String: Any]
+//            dailyWeather.dailyWeatherIcon = dailyWeatherAdditionalInfo?["icon"] as? String
+//
+//            dailyWeatherArray.append(dailyWeather)
+//        }
+
+//        let dailyMainInfo = dailyWeatherInfo?[0]
+//        guard let dailyMinTemp = dailyMainInfo?["min_temp"] as? Double else { return }
+//        guard let dailyMaxTemp = dailyMainInfo?["max_temp"] as? Double else { return }
+//        let dailyDate = dailyMainInfo?["ts"] as? Int
+//        let dailyWeatherAdditionalInfo = dailyMainInfo?["weather"] as? [String: Any]
+//        let dailyWeatherIcon = dailyWeatherAdditionalInfo?["icon"] as? String
 //        guard let cityNam = dailyInfo["city_name"] as? String else { return }
 
 		// Saving/updating City Entity
@@ -91,6 +105,7 @@ class PersistenceManager {
             city?.location?.longitude = longitude
         }
 
+ 
         // Saving/updating CurrentWeather Entity
 
         if city?.currentWeather == nil {
@@ -120,14 +135,47 @@ class PersistenceManager {
 //                                                       into: context) as? DailyWeather
 //        }
 
-        if city?.dailyWeathert == nil {
-            city?.dailyWeathert = NSEntityDescription.insertNewObject(forEntityName: "DailyWeather",
+//        var dailyWeathers = city?.dailyWeathert?.allObjects as NSArray?
+        var dailyWeather: DailyWeather?
+        if city?.dailyWeathert?.allObjects.first == nil {
+            dailyWeather = NSEntityDescription.insertNewObject(forEntityName: "DailyWeather",
             into: context) as? DailyWeather
         }
+        for oneDayWeayher in dailyWeatherInfo {
+            dailyWeather?.tempMin = oneDayWeayher["min_temp"] as? Double ?? 0
+            dailyWeather?.tempMax = oneDayWeayher["max_temp"] as? Double ?? 0
+            guard let dayTime = oneDayWeayher["ts"] as? Int else { return }
+            dailyWeather?.date = getDateFromStamp(timeInterval: dayTime)
+            guard let dailyWeatherAdditionalInfo = oneDayWeayher["weather"] as? [String: Any] else { return }
+            dailyWeather?.dailyIcon = dailyWeatherAdditionalInfo["icon"] as? String
+            if let dailyWeather = dailyWeather {
+                city?.addToDailyWeathert(dailyWeather)
+            }
+        }
+//        for i in 0...dailyWeatherInfo.count - 1 {
+//            let dailyMainInfo = dailyWeatherInfo[i]
+//            dailyWeather?.tempMin = dailyMainInfo["min_temp"] as? Double ?? 0
+//            dailyWeather?.tempMax = dailyMainInfo["max_temp"] as? Double ?? 0
+//            guard let dayTime = dailyMainInfo["ts"] as? Int else { return }
+//            dailyWeather?.date = getDateFromStamp(timeInterval: dayTime)
+//            guard let dailyWeatherAdditionalInfo = dailyMainInfo["weather"] as? [String: Any] else { return }
+//            dailyWeather?.dailyIcon = dailyWeatherAdditionalInfo["icon"] as? String
+//            if let dailyWeather = dailyWeather {
+//                city?.addToDailyWeathert(dailyWeather)
+//            }
+//        }
+        print(city?.dailyWeathert)
 
-        city?.dailyWeathert?.tempMin = dailyMinTemp
-        city?.dailyWeathert?.tempMax = dailyMaxTemp
-        city?.dailyWeathert?.dailyIcon = dailyWeatherIcon
+
+
+//        let dailyWeathertArray = dailyWeatherInfo
+//        for i in 0...dailyWeatherInfo.count {
+//            let dailyMainInfo = dailyWeatherInfo[i]
+//            city?.dailyWeathert?.tempMin = dailyMinTemp
+//            city?.dailyWeathert?.tempMax = dailyMaxTemp
+//            city?.dailyWeathert?.dailyIcon = dailyWeatherIcon
+//        }
+
 
 //        if let dailyDate = dailyDate {
 //            dailyWeather?.date = getDateFromStamp(timeInterval: dailyDate)
@@ -160,16 +208,16 @@ class PersistenceManager {
         return []
     }
 
-    func fetchDailyWeather() -> [DailyWeather] {
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "DailyWeather")
-        do {
-            let item = try context.fetch(fetchRequest) as? [DailyWeather]
-            return item ?? []
-        } catch let error {
-            print(error)
-        }
-        return []
-    }
+//    func fetchDailyWeather() -> [DailyWeather] {
+//        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "DailyWeather")
+//        do {
+//            let item = try context.fetch(fetchRequest) as? [DailyWeather]
+//            return item ?? []
+//        } catch let error {
+//            print(error)
+//        }
+//        return []
+//    }
 
 
     // MARK: - Core Data Deleting support
@@ -187,11 +235,11 @@ class PersistenceManager {
         saveContext()
     }
 
-    func deleteDailyWeatherInfoItem(in array: inout [DailyWeather], by index: Int) {
-           let item = array[index]
-           context.delete(item)
-           saveContext()
-       }
+//    func deleteDailyWeatherInfoItem(in array: inout [DailyWeather], by index: Int) {
+//           let item = array[index]
+//           context.delete(item)
+//           saveContext()
+//       }
 
     // MARK: - Core Data Context
 
@@ -274,3 +322,4 @@ class PersistenceManager {
 //    }
 
 }
+

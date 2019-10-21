@@ -35,7 +35,7 @@ class CityTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
 
-    func update(currentInfo weatherItem: CurrentWeather, dailyInfo: DailyWeather, and cityItem: City) {
+    func update(currentInfo weatherItem: CurrentWeather, and cityItem: City) {
         temperatureLabel.text = String(Int(weatherItem.currentTemp))
         cityNameLabel.text = cityItem.cityName
         timeLabel.text = cityItem.time

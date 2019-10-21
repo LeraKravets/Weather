@@ -2,7 +2,7 @@
 //  DailyWeather+CoreDataProperties.swift
 //  WeatherApp
 //
-//  Created by Лера on 9/28/19.
+//  Created by Лера on 10/20/19.
 //  Copyright © 2019 com.vkravets. All rights reserved.
 //
 //
@@ -22,23 +22,6 @@ extension DailyWeather {
     @NSManaged public var date: String?
     @NSManaged public var tempMax: Double
     @NSManaged public var tempMin: Double
-    @NSManaged public var city: NSSet?
-
-}
-
-// MARK: Generated accessors for city
-extension DailyWeather {
-
-    @objc(addCityObject:)
-    @NSManaged public func addToCity(_ value: City)
-
-    @objc(removeCityObject:)
-    @NSManaged public func removeFromCity(_ value: City)
-
-    @objc(addCity:)
-    @NSManaged public func addToCity(_ values: NSSet)
-
-    @objc(removeCity:)
-    @NSManaged public func removeFromCity(_ values: NSSet)
+    @NSManaged public var city: City?
 
 }

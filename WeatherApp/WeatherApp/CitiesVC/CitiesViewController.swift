@@ -18,7 +18,7 @@ class CitiesViewController: UIViewController {
 
     var currentWeatherItems: [CurrentWeather] = PersistenceManager.shared.fetchCurrentWeather()
     var cityInfo: [City] = PersistenceManager.shared.fetchCityInfo()
-    var dailyWeatherItems: [DailyWeather] = PersistenceManager.shared.fetchDailyWeather()
+//    var dailyWeatherItems: [DailyWeather] = PersistenceManager.shared.fetchDailyWeather()
 //    var cityID: [Int16] = []
 
 //    var timer: Timer?
@@ -83,7 +83,7 @@ class CitiesViewController: UIViewController {
 //            PersistenceManager.shared.saveCurrentWeatherInfo(currentWeatherInfo: currentWeather)
 //            PersistenceManager.shared.saveDailyWeatherInfo(info: dailyWeather)
             self.currentWeatherItems = PersistenceManager.shared.fetchCurrentWeather()
-            self.dailyWeatherItems = PersistenceManager.shared.fetchDailyWeather()
+//            self.dailyWeatherItems = PersistenceManager.shared.fetchDailyWeather()
 
             DispatchQueue.main.async {
                 self.citiesTableView.reloadData()
@@ -100,7 +100,7 @@ class CitiesViewController: UIViewController {
         self.present(searchVC, animated: true, completion: nil)
     }
 
-    func goToCity(cities: [City], currentWeather: [CurrentWeather], dailyWeather: [DailyWeather], index: Int) {
+    func goToCity(cities: [City], currentWeather: [CurrentWeather], index: Int) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         guard let citiesPVC = storyboard.instantiateViewController(withIdentifier: "CitiesPVC") as? CitiesPVC else { return }
         citiesPVC.cities = cities
@@ -139,7 +139,7 @@ extension CitiesViewController: UITableViewDataSource {
                     fatalError("Can't find cell with id: \(cityCellID)")
             }
 //            cell.delegate = self
-            cell.update(currentInfo: currentWeatherItems[indexPath.row], dailyInfo: dailyWeatherItems[indexPath.row], and: cityInfo[indexPath.row])
+            cell.update(currentInfo: currentWeatherItems[indexPath.row], and: cityInfo[indexPath.row])
             return cell
 
         case .newCity:
@@ -169,7 +169,7 @@ extension CitiesViewController: UITableViewDelegate {
         }
         switch sectionIndex {
         case .cityInfo:
-            goToCity(cities: cityInfo, currentWeather: currentWeatherItems, dailyWeather: dailyWeatherItems, index: indexPath.row)
+            goToCity(cities: cityInfo, currentWeather: currentWeatherItems, index: indexPath.row)
         case .newCity:
             return
         }
@@ -191,7 +191,7 @@ extension CitiesViewController: UITableViewDelegate {
         if editingStyle == .delete {
             PersistenceManager.shared.deleteCityInfoItem(in: &cityInfo, by: indexPath.row)
             PersistenceManager.shared.deleteCurrentWeatherInfoItem(in: &currentWeatherItems, by: indexPath.row)
-            PersistenceManager.shared.deleteDailyWeatherInfoItem(in: &dailyWeatherItems, by: indexPath.row)
+//            PersistenceManager.shared.deleteDailyWeatherInfoItem(in: &dailyWeatherItems, by: indexPath.row)
             cityInfo.remove(at: indexPath.row)
             citiesTableView.reloadData()
         }
