@@ -121,6 +121,8 @@ class PersistenceManager {
             city?.currentWeather?.pressure = pressure
         }
 
+
+
 //        var dailyWeather: DailyWeather?
 //
 //        let dailyWeatherRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "DailyWeather")
@@ -137,16 +139,25 @@ class PersistenceManager {
 
 //        var dailyWeathers = city?.dailyWeathert?.allObjects as NSArray?
         var dailyWeather: DailyWeather?
-        if city?.dailyWeathert?.allObjects.first == nil {
-            dailyWeather = NSEntityDescription.insertNewObject(forEntityName: "DailyWeather",
-            into: context) as? DailyWeather
+//        if city?.dailyWeathert?.allObjects.first == nil {
+//            dailyWeather = NSEntityDescription.insertNewObject(forEntityName: "DailyWeather",
+//            into: context) as? DailyWeather
+//        }
+
+
+
+        for item in city?.dailyWeathert ?? [] {
+            context.delete(item as! NSManagedObject)
         }
-        for oneDayWeayher in dailyWeatherInfo {
-            dailyWeather?.tempMin = oneDayWeayher["min_temp"] as? Double ?? 0
-            dailyWeather?.tempMax = oneDayWeayher["max_temp"] as? Double ?? 0
-            guard let dayTime = oneDayWeayher["ts"] as? Int else { return }
+
+        for oneDayWeather in dailyWeatherInfo {
+            let dailyWeather = NSEntityDescription.insertNewObject(forEntityName: "DailyWeather",
+                                                                   into: context) as? DailyWeather
+            dailyWeather?.tempMin = oneDayWeather["min_temp"] as? Double ?? 0
+            dailyWeather?.tempMax = oneDayWeather["max_temp"] as? Double ?? 0
+            guard let dayTime = oneDayWeather["ts"] as? Int else { return }
             dailyWeather?.date = getDateFromStamp(timeInterval: dayTime)
-            guard let dailyWeatherAdditionalInfo = oneDayWeayher["weather"] as? [String: Any] else { return }
+            guard let dailyWeatherAdditionalInfo = oneDayWeather["weather"] as? [String: Any] else { return }
             dailyWeather?.dailyIcon = dailyWeatherAdditionalInfo["icon"] as? String
             if let dailyWeather = dailyWeather {
                 city?.addToDailyWeathert(dailyWeather)
@@ -277,7 +288,7 @@ class PersistenceManager {
     func getDateFromStamp(timeInterval: Int) -> String{
         let date = NSDate(timeIntervalSince1970: TimeInterval(timeInterval))
         let dateFormatter = DateFormatter()
-        let dateFormat = "hh:mm" //EEEEEEEEEE, yyyy, MMM dd
+        let dateFormat = "EEEEEEEEEE, yyyy, MMM dd"  //hh:mm
         dateFormatter.dateFormat = dateFormat
         let dateString = dateFormatter.string(from: date as Date)
         return dateString

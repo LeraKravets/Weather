@@ -6,7 +6,7 @@
         <attribute name="time" optional="YES" attributeType="String"/>
         <relationship name="country" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Country" inverseName="city" inverseEntity="Country"/>
         <relationship name="currentWeather" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="CurrentWeather" inverseName="city" inverseEntity="CurrentWeather"/>
-        <relationship name="dailyWeathert" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DailyWeather" inverseName="city" inverseEntity="DailyWeather"/>
+        <relationship name="dailyWeathert" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="DailyWeather" inverseName="city" inverseEntity="DailyWeather"/>
         <relationship name="location" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Location" inverseName="city" inverseEntity="Location"/>
     </entity>
     <entity name="Country" representedClassName="Country" syncable="YES">

@@ -31,9 +31,21 @@ class CityVC: UIViewController {
         cityLabel.text = city?.cityName
         summaryLabel.text = city?.currentWeather?.summary
         guard let currentTemp = city?.currentWeather?.currentTemp else { return }
-//        let dailyTemp = city?.dailyWeathert?.dailyTemp
         tempLabel.text = String(Int(currentTemp))
 
+//        let dailyTemp = city?.dailyWeathert?.allObjects.first
+//        var dailyWeather: [String: Any]
+        let setOfDailyWeather = city?.dailyWeathert as? Set<DailyWeather> ?? []
+//         print(setOfDailyWeather)
+        for oneDayWeather in setOfDailyWeather {
+            let dailyTemp = oneDayWeather.dailyTemp
+            let dailyIcon = oneDayWeather.dailyIcon
+            let tempMax = oneDayWeather.tempMax
+            let tempMin = oneDayWeather.tempMin
+            let date = oneDayWeather.date
+
+            print(oneDayWeather)
+        }
 //        setupPageController()
 //
 //        pageController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)

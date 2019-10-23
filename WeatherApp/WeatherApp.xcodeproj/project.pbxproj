@@ -139,6 +139,7 @@
 		CFBDFF362332CA8000C50B4E /* New Group */ = {
 			isa = PBXGroup;
 			children = (
+				CFDB092C235CD46D000B5B95 /* ModelDailyWeather.swift */,
 				CFBDFF372332CA9D00C50B4E /* CityInfo.swift */,
 				CFBDFF3B2333A22500C50B4E /* WeatherItems.swift */,
 			);
@@ -148,7 +149,6 @@
 		CFBDFF3A2333A20900C50B4E /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				CFDB092C235CD46D000B5B95 /* ModelDailyWeather.swift */,
 				CFDB093A235CF34D000B5B95 /* City+CoreDataClass.swift */,
 				CFDB093B235CF34D000B5B95 /* City+CoreDataProperties.swift */,
 				CFDB0936235CF34D000B5B95 /* CurrentWeather+CoreDataClass.swift */,

@@ -40,7 +40,6 @@ class CitiesViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        updateData()
         citiesTableView.reloadData()
     }
 
@@ -83,6 +82,7 @@ class CitiesViewController: UIViewController {
 //            PersistenceManager.shared.saveCurrentWeatherInfo(currentWeatherInfo: currentWeather)
 //            PersistenceManager.shared.saveDailyWeatherInfo(info: dailyWeather)
             self.currentWeatherItems = PersistenceManager.shared.fetchCurrentWeather()
+            self.cityInfo = PersistenceManager.shared.fetchCityInfo()
 //            self.dailyWeatherItems = PersistenceManager.shared.fetchDailyWeather()
 
             DispatchQueue.main.async {

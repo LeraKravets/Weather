@@ -48,11 +48,13 @@ class CitiesPVC: UIPageViewController {
 extension CitiesPVC: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         guard let currentVC = viewController as? CityVC else { return nil }
-        guard let index = arrayCityVC.firstIndex(of: currentVC) else { return nil }
-        if index > 0 {
-            return arrayCityVC[index - 1]
-        } else if index == 0 {
-            return arrayCityVC[cities.count-1]
+        guard let previousCityIndex = arrayCityVC.firstIndex(of: currentVC) else { return nil }
+        if previousCityIndex > 0 {
+            return arrayCityVC[previousCityIndex - 1]
+        } else if previousCityIndex == 0 {
+//            return arrayCityVC[cities.count-1]
+            return arrayCityVC.last
+
         }
         return nil
     }
