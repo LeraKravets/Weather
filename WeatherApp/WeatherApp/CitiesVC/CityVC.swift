@@ -13,57 +13,67 @@ class CityVC: UIViewController {
     @IBOutlet weak var cityLabel: UILabel!
     @IBOutlet weak var summaryLabel: UILabel!
     @IBOutlet weak var tempLabel: UILabel!
-    @IBOutlet weak var iconView: UIImageView!
     @IBOutlet weak var backgroundView: UIImageView!
 
+    @IBOutlet weak var dailyWeatherTableView: UITableView!
+
+
+
     var city: City?
+    var setOfDailyWeather: Set<DailyWeather>?
+    var arrayOfDailyWeather: [DailyWeather]?
+
+    let cellId = "DailyWeatherCellID"
 //    var currentWeather: CurrentWeather?
 //    var dailyWeather: DailyWeather?
 
-
-    //    var controllers = [UIViewController]()
-//    var currentVCIndex = 0
-
-
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        dailyWeatherTableView.delegate = self
+        dailyWeatherTableView.dataSource = self
 
         cityLabel.text = city?.cityName
         summaryLabel.text = city?.currentWeather?.summary
         guard let currentTemp = city?.currentWeather?.currentTemp else { return }
         tempLabel.text = String(Int(currentTemp))
 
-//        let dailyTemp = city?.dailyWeathert?.allObjects.first
-//        var dailyWeather: [String: Any]
-        let setOfDailyWeather = city?.dailyWeathert as? Set<DailyWeather> ?? []
-//         print(setOfDailyWeather)
-        for oneDayWeather in setOfDailyWeather {
-            let dailyTemp = oneDayWeather.dailyTemp
-            let dailyIcon = oneDayWeather.dailyIcon
-            let tempMax = oneDayWeather.tempMax
-            let tempMin = oneDayWeather.tempMin
-            let date = oneDayWeather.date
+//        let setOfDailyWeather = city?.dailyWeathert as? Set<DailyWeather> ?? []
+        setOfDailyWeather = city?.dailyWeathert as? Set<DailyWeather>
+        arrayOfDailyWeather = setOfDailyWeather?.sorted(by: { $0.date < $1.date })
 
-            print(oneDayWeather)
-        }
-//        setupPageController()
+
+
+//        for oneDayWeather in setOfDailyWeather {
+//            let dailyTemp = oneDayWeather.dailyTemp
+//            let dailyIcon = oneDayWeather.dailyIcon
+//            let tempMax = oneDayWeather.tempMax
+//            let tempMin = oneDayWeather.tempMin
+//            let date = oneDayWeather.date
 //
-//        pageController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
+//            print(oneDayWeather)
+//        }
     }
+}
 
+extension CityVC: UITableViewDelegate {
 
-//    func setupPageController() {
-//
-//        guard let pageController = storyboard?.instantiateViewController(withIdentifier: "CitiesPVC") as? CitiesPVC else { return }
-//
-//        pageController.dataSource = self
-//        pageController.delegate = self
-//
-//        addChild(pageController)
-//        pageController.didMove(toParent: self)
-//
-//        pageController.setViewControllers(<#T##viewControllers: [UIViewController]?##[UIViewController]?#>, direction: <#T##UIPageViewController.NavigationDirection#>, animated: <#T##Bool#>, completion: <#T##((Bool) -> Void)?##((Bool) -> Void)?##(Bool) -> Void#>)
-//
-//    }
+}
+extension CityVC: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        setOfDailyWeather?.count ?? 0
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as? DailyWeatherTableViewCell else {
+            fatalError("Can't find cell with id: \(cellId)")
+        }
+        if let arrayOfDailyWeather = arrayOfDailyWeather {
+            cell.updateDailyWeather(dailyWeatherInfo: arrayOfDailyWeather[indexPath.row])
+        }
+
+        return cell
+    }
+    
 
 }

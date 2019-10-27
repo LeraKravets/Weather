@@ -81,9 +81,9 @@ class PersistenceManager {
         }
         city?.cityName = cityName
         city?.cityId = cityId
-        if let cityTime = cityTime {
-            city?.time = getDateFromStamp(timeInterval: cityTime)
-        }
+//        if let cityTime = cityTime {
+//            city?.time = getDateFromStamp(timeInterval: cityTime)
+//        }
 
         // Saving/updating Country Entity
 
@@ -155,8 +155,9 @@ class PersistenceManager {
                                                                    into: context) as? DailyWeather
             dailyWeather?.tempMin = oneDayWeather["min_temp"] as? Double ?? 0
             dailyWeather?.tempMax = oneDayWeather["max_temp"] as? Double ?? 0
-            guard let dayTime = oneDayWeather["ts"] as? Int else { return }
-            dailyWeather?.date = getDateFromStamp(timeInterval: dayTime)
+//            guard let dayTime = oneDayWeather["ts"] as? Int else { return }
+//            dailyWeather?.date = getDateFromStamp(timeInterval: dayTime)
+            dailyWeather?.date = oneDayWeather["ts"] as? Int64 ?? 0
             guard let dailyWeatherAdditionalInfo = oneDayWeather["weather"] as? [String: Any] else { return }
             dailyWeather?.dailyIcon = dailyWeatherAdditionalInfo["icon"] as? String
             if let dailyWeather = dailyWeather {

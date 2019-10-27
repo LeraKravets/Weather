@@ -12,7 +12,6 @@ class CityTableViewCell: UITableViewCell {
 
     // MARK: - Outlets
 
-    @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var cityNameLabel: UILabel!
     @IBOutlet weak var temperatureLabel: UILabel!
     
@@ -38,7 +37,7 @@ class CityTableViewCell: UITableViewCell {
     func update(currentInfo weatherItem: CurrentWeather, and cityItem: City) {
         temperatureLabel.text = String(Int(weatherItem.currentTemp))
         cityNameLabel.text = cityItem.cityName
-        timeLabel.text = cityItem.time
+//        timeLabel.text = cityItem.time
     }
 
     // MARK: - Actions

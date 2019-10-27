@@ -97,6 +97,7 @@ class CitiesViewController: UIViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         guard let searchVC = storyboard.instantiateViewController(withIdentifier: "SearchViewController") as? SearchViewController else { return }
         searchVC.searchDelegate = self
+        searchVC.modalPresentationStyle = .fullScreen
         self.present(searchVC, animated: true, completion: nil)
     }
 
@@ -107,6 +108,7 @@ class CitiesViewController: UIViewController {
         citiesPVC.initialIndex = index
 //        citiesPVC.currentWeather = currentWeather
 //        citiesPVC.dailyWeather = dailyWeather
+        citiesPVC.modalPresentationStyle = .fullScreen //or .overFullScreen for transparency
         self.present(citiesPVC, animated: true, completion: nil)
     }
 }

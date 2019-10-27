@@ -32,13 +32,13 @@ class SearchViewController: UIViewController {
     var searchCity: [String] = []
     var searching = false
 
-//    var targetCity: String?
+    let searchController = UISearchController(searchResultsController: nil)
+
 
     // MARK: - Life Cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
-      
         loudJsonData(filename: "city.list.min")
     }
 
