@@ -46,7 +46,7 @@
                                     <constraint firstAttribute="width" secondItem="KUG-TH-ViS" secondAttribute="height" multiplier="1:1" id="KQ0-3O-ln3"/>
                                     <constraint firstAttribute="width" constant="110" id="cYZ-jr-aZv"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="66"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -80,7 +80,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="CNh-mD-zmU">
-                                                    <rect key="frame" x="214" y="4.5" width="35" height="35"/>
+                                                    <rect key="frame" x="224" y="4.5" width="35" height="35"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="35" id="C8E-VL-49A"/>
                                                         <constraint firstAttribute="width" secondItem="CNh-mD-zmU" secondAttribute="height" multiplier="1:1" id="RQg-hp-0vN"/>
@@ -96,7 +96,7 @@
                                             <constraints>
                                                 <constraint firstItem="vPQ-56-YJ4" firstAttribute="centerY" secondItem="HQ6-bl-vkA" secondAttribute="centerY" id="K11-Hs-pqN"/>
                                                 <constraint firstItem="CNh-mD-zmU" firstAttribute="centerY" secondItem="HQ6-bl-vkA" secondAttribute="centerY" id="M5K-us-AON"/>
-                                                <constraint firstItem="NHh-2S-v0H" firstAttribute="leading" secondItem="CNh-mD-zmU" secondAttribute="trailing" constant="50" id="UOP-99-NID"/>
+                                                <constraint firstItem="NHh-2S-v0H" firstAttribute="leading" secondItem="CNh-mD-zmU" secondAttribute="trailing" constant="40" id="UOP-99-NID"/>
                                                 <constraint firstItem="D8d-Td-zEv" firstAttribute="leading" secondItem="HQ6-bl-vkA" secondAttribute="leading" constant="5" id="V9U-vn-aqT"/>
                                                 <constraint firstItem="NHh-2S-v0H" firstAttribute="centerY" secondItem="HQ6-bl-vkA" secondAttribute="centerY" id="c3M-1O-mE5"/>
                                                 <constraint firstItem="D8d-Td-zEv" firstAttribute="centerY" secondItem="HQ6-bl-vkA" secondAttribute="centerY" id="jJC-5w-2Yl"/>
