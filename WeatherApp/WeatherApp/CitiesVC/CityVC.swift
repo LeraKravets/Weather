@@ -17,6 +17,7 @@ class CityVC: UIViewController {
 
     @IBOutlet weak var dailyWeatherTableView: UITableView!
 
+//    @IBOutlet weak var citiesPageControl: UIPageControl!
 
 
     var city: City?
@@ -29,7 +30,6 @@ class CityVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         dailyWeatherTableView.delegate = self
         dailyWeatherTableView.dataSource = self
 
@@ -43,6 +43,9 @@ class CityVC: UIViewController {
         arrayOfDailyWeather = setOfDailyWeather?.sorted(by: { $0.date < $1.date })
 
 
+       
+
+
 
 //        for oneDayWeather in setOfDailyWeather {
 //            let dailyTemp = oneDayWeather.dailyTemp
@@ -54,9 +57,17 @@ class CityVC: UIViewController {
 //            print(oneDayWeather)
 //        }
     }
+
+    @IBAction func backToMenuButtonTapped(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
+
 }
 
 extension CityVC: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 30
+    }
 
 }
 extension CityVC: UITableViewDataSource {

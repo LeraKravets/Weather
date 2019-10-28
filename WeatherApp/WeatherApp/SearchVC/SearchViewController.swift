@@ -40,6 +40,18 @@ class SearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         loudJsonData(filename: "city.list.min")
+
+        // 1
+//        searchController.searchResultsUpdater = self
+        // 2
+        searchController.obscuresBackgroundDuringPresentation = false
+        // 3
+//        searchController.searchBar.placeholder = "Search Candies"
+        // 4
+        navigationItem.searchController = searchController
+        // 5
+        definesPresentationContext = true
+
     }
 
     // MARK: - Parsing local JSON file   "city.list.min"
@@ -128,3 +140,9 @@ extension SearchViewController: UISearchBarDelegate {
         dismiss(animated: true, completion: nil)
     }
 }
+
+//extension SearchViewController: UISearchResultsUpdating {
+//  func updateSearchResults(for searchController: UISearchController) {
+//    // TODO
+//  }
+//}

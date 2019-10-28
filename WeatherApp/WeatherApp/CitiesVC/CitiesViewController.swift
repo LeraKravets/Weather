@@ -104,10 +104,10 @@ class CitiesViewController: UIViewController {
     func goToCity(cities: [City], currentWeather: [CurrentWeather], index: Int) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         guard let citiesPVC = storyboard.instantiateViewController(withIdentifier: "CitiesPVC") as? CitiesPVC else { return }
+//        let weatherInfo = ["citiesArray": cities, "index": index] as [String : Any]
+//        NotificationCenter.default.post(name: CitiesPVC.notificationName, object: nil, userInfo: weatherInfo)
         citiesPVC.cities = cities
         citiesPVC.initialIndex = index
-//        citiesPVC.currentWeather = currentWeather
-//        citiesPVC.dailyWeather = dailyWeather
         citiesPVC.modalPresentationStyle = .fullScreen //or .overFullScreen for transparency
         self.present(citiesPVC, animated: true, completion: nil)
     }

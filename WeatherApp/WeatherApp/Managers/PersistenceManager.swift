@@ -87,11 +87,13 @@ class PersistenceManager {
 
         // Saving/updating Country Entity
 
-        let country = NSEntityDescription.insertNewObject(forEntityName: "Country",
-                                                          into: context) as? Country
-        country?.countryName = countryName
+        if city?.country == nil {
+            city?.country = NSEntityDescription.insertNewObject(forEntityName: "Country",
+                                                                into: context) as? Country
+        }
+        city?.country?.countryName = countryName
         if let countryId = countryId {
-            country?.countryId = countryId
+            city?.country?.countryId = countryId
         }
 
         // Saving/updating Location Entity
@@ -114,11 +116,11 @@ class PersistenceManager {
         city?.currentWeather?.currentIcon = currentIcon
         city?.currentWeather?.summary = summary
         if let currentTemp = currentTemp, let tempMin = tempMin, let tempMax = tempMax, let humidity = humidity, let pressure = pressure {
-            city?.currentWeather?.currentTemp = currentTemp - 273.15
-            city?.currentWeather?.tempMin = tempMin - 273.15
-            city?.currentWeather?.tempMax = tempMax - 273.15
-            city?.currentWeather?.humidity = humidity
-            city?.currentWeather?.pressure = pressure
+            city?.currentWeather?.currentTemp = round(currentTemp - 273.15)
+            city?.currentWeather?.tempMin = round(tempMin - 273.15)
+            city?.currentWeather?.tempMax = round(tempMax - 273.15)
+            city?.currentWeather?.humidity = round(humidity)
+            city?.currentWeather?.pressure = round(pressure)
         }
 
 
@@ -153,16 +155,33 @@ class PersistenceManager {
         for oneDayWeather in dailyWeatherInfo {
             let dailyWeather = NSEntityDescription.insertNewObject(forEntityName: "DailyWeather",
                                                                    into: context) as? DailyWeather
-            dailyWeather?.tempMin = oneDayWeather["min_temp"] as? Double ?? 0
-            dailyWeather?.tempMax = oneDayWeather["max_temp"] as? Double ?? 0
-//            guard let dayTime = oneDayWeather["ts"] as? Int else { return }
-//            dailyWeather?.date = getDateFromStamp(timeInterval: dayTime)
-            dailyWeather?.date = oneDayWeather["ts"] as? Int64 ?? 0
-            guard let dailyWeatherAdditionalInfo = oneDayWeather["weather"] as? [String: Any] else { return }
-            dailyWeather?.dailyIcon = dailyWeatherAdditionalInfo["icon"] as? String
-            if let dailyWeather = dailyWeather {
+            let dailyTempMin = oneDayWeather["min_temp"] as? Double
+            let dailyTempMax = oneDayWeather["max_temp"] as? Double
+            let dailyWeatherDate = oneDayWeather["ts"] as? Int64
+            let dailyWeatherAdditionalInfo = oneDayWeather["weather"] as? [String: Any] ?? [:]
+            let dailyWeatherIcon = dailyWeatherAdditionalInfo["icon"] as? String
+
+            if let dailyTempMin = dailyTempMin, let dailyTempMax = dailyTempMax, let dailyWeatherDate = dailyWeatherDate, let dailyWeatherIcon = dailyWeatherIcon, let dailyWeather = dailyWeather {
+                dailyWeather.tempMin = Int64(Int(round(dailyTempMin)))
+                dailyWeather.tempMax = Int64(Int(round(dailyTempMax)))
+                dailyWeather.date = dailyWeatherDate
+                dailyWeather.dailyIcon = dailyWeatherIcon
                 city?.addToDailyWeathert(dailyWeather)
             }
+
+
+
+
+//            dailyWeather?.tempMin = oneDayWeather["min_temp"] as? Double ?? 0
+//            dailyWeather?.tempMax = oneDayWeather["max_temp"] as? Double ?? 0
+////            guard let dayTime = oneDayWeather["ts"] as? Int else { return }
+////            dailyWeather?.date = getDateFromStamp(timeInterval: dayTime)
+//            dailyWeather?.date = oneDayWeather["ts"] as? Int64 ?? 0
+//            guard let dailyWeatherAdditionalInfo = oneDayWeather["weather"] as? [String: Any] else { return }
+//            dailyWeather?.dailyIcon = dailyWeatherAdditionalInfo["icon"] as? String
+//            if let dailyWeather = dailyWeather {
+//                city?.addToDailyWeathert(dailyWeather)
+//            }
         }
 //        for i in 0...dailyWeatherInfo.count - 1 {
 //            let dailyMainInfo = dailyWeatherInfo[i]

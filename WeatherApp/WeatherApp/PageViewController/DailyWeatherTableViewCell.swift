@@ -24,18 +24,20 @@ class DailyWeatherTableViewCell: UITableViewCell {
     }
 
     func updateDailyWeather(dailyWeatherInfo: DailyWeather) {
-//        weatherIconImageView = dailyWeatherInfo.dailyIcon
+      print(dailyWeatherInfo.dailyIcon)
         maxTempLabel.text = String(dailyWeatherInfo.tempMax)
         minTempLabel.text = String(dailyWeatherInfo.tempMin)
-        weekDayLabel.text = getDateFromStamp(timeInterval: Int(dailyWeatherInfo.date))
+        weekDayLabel.text = getDateFromStamp(Int(dailyWeatherInfo.date))
     }
 
-    func getDateFromStamp(timeInterval: Int) -> String{
-         let date = NSDate(timeIntervalSince1970: TimeInterval(timeInterval))
+    func getDateFromStamp(_ today: Int) -> String {
+         let date = NSDate(timeIntervalSince1970: TimeInterval(today))
          let dateFormatter = DateFormatter()
-         let dateFormat = "EEEEEEEEEE"  //hh:mm
-         dateFormatter.dateFormat = dateFormat
-         let dateString = dateFormatter.string(from: date as Date)
-         return dateString
+         dateFormatter.dateFormat = "E"
+//         let dateString = dateFormatter.string(from: date as Date)
+        let myCalendar = Calendar(identifier: .gregorian)
+        let weekDay = myCalendar.component(.weekday, from: date as Date)
+        let weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+        return weekdays[weekDay - 1]
      }
 }
