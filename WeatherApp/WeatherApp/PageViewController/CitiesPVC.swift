@@ -13,32 +13,35 @@ class CitiesPVC: UIPageViewController {
     var cities = [City]()
     var initialIndex: Int?
 
-//    var pendingIndex: Int?
-//
-//    var pageControl = UIPageControl()
+    lazy var myPageControl: UIPageControl = {
+        let pageControl = UIPageControl()
+        pageControl.frame = CGRect(x: 0, y: view.frame.maxY - 60, width: UIScreen.main.bounds.width, height: 50)
+        pageControl.numberOfPages = cities.count
+        if let pageControlIndex = initialIndex {
+            pageControl.currentPage = pageControlIndex
+        }
+        pageControl.pageIndicatorTintColor = UIColor.lightGray
+        pageControl.currentPageIndicatorTintColor = UIColor.white
+        pageControl.backgroundColor = UIColor.clear
+        return pageControl
+    }()
 
-
-//    static let notificationName = NSNotification.Name("MainCitiesVC.passData")
+    lazy var backToMenu: UIButton = {
+        let button = UIButton(frame: CGRect(x: view.frame.maxX - 40, y: view.frame.maxY - 40, width: 20, height: 15))
+        button.backgroundColor = UIColor.clear
+        button.setImage(UIImage(named: "menu"), for: .normal)
+        button.addTarget(self, action: #selector(backToMenuButtonTapped), for: .touchUpInside)
+        return button
+    }()
 
     override func viewDidLoad() {
-//        pageControl = UIPageControl(frame: CGRect(x: 0,y: 0,width: UIScreen.main.bounds.width,height: 50))
-//        self.pageControl.numberOfPages = cities.count
-//        // self.pageControl.currentPage = 0
-//         self.pageControl.tintColor = UIColor.lightGray
-//         self.pageControl.pageIndicatorTintColor = UIColor.lightGray
-//         self.pageControl.currentPageIndicatorTintColor = UIColor.black
-//         pageControl.backgroundColor = UIColor.clear
-//         self.view.addSubview(pageControl)
-
-
-
         super.viewDidLoad()
+
+        self.view.addSubview(myPageControl)
+        self.view.addSubview(backToMenu)
+
         self.dataSource = self
         self.delegate = self
-//
-//        cities = cscc?.cities ?? []
-//        initialIndex = cscc?.initialIndex
-
 
         guard let index = initialIndex else { return }
         setViewControllers([arrayCityVC[index]], direction: .forward, animated: true, completion: nil)
@@ -52,23 +55,6 @@ class CitiesPVC: UIPageViewController {
             }
         }
     }
-
-//    func addObservers() {
-//        NotificationCenter.default.addObserver(self, selector: #selector(CitiesPVC.didReceiveData(_:)), name: CitiesPVC.notificationName, object: nil)
-//
-//    }
-//
-//    @objc func didReceiveData(_ notification: Notification) {
-//        let weatherInfo = notification.userInfo
-//        if let index = weatherInfo?["index"], let citiesArray = weatherInfo?["citiesArray"] {
-//            initialIndex = index as? Int
-//            cities = citiesArray as? [City] ?? []
-//        }
-//    }
-//
-//    deinit {
-//        NotificationCenter.default.removeObserver(self)
-//    }
 
 	// MARK: - Create VC
     lazy var arrayCityVC: [CityVC] = {
@@ -93,6 +79,10 @@ class CitiesPVC: UIPageViewController {
 //        addObservers()
 //        fatalError("init(coder:) has not been implemented")
     }
+
+    @objc func backToMenuButtonTapped(_ sender: UIButton) {
+         dismiss(animated: true, completion: nil)
+     }
 }
 
 extension CitiesPVC: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
@@ -121,12 +111,35 @@ extension CitiesPVC: UIPageViewControllerDataSource, UIPageViewControllerDelegat
         return nil
     }
 
-    func presentationCount(for pageViewController: UIPageViewController) -> Int {
-        return cities.count
-    }
-    func presentationIndex(for pageViewController: UIPageViewController) -> Int {
-        return 0
-    }
+//    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+//        guard completed else { return }
+//        guard let currentVC = pageViewController.viewControllers?.first as? CityVC else {
+//            return
+//        }
+//        guard let cityIndex = arrayCityVC.firstIndex(of: currentVC) else { return }
+//        pageControl.currentPage = cityIndex
+//    }
+    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+          guard completed else { return }
+          guard let currentVC = pageViewController.viewControllers?.first as? CityVC else {
+              return
+          }
+        guard let index = arrayCityVC.firstIndex(of: currentVC) else { return }
+        myPageControl.currentPage = index
+      }
+
+
+
+//    func presentationCount(for pageViewController: UIPageViewController) -> Int {
+//        return cities.count
+//    }
+//    func presentationIndex(for pageViewController: UIPageViewController) -> Int {
+//        return 0
+//    }
+
+
+
+
 
 //    func pageViewController(_ pageViewController: UIPageViewController, willTransitionTo pendingViewControllers: [UIViewController]) {
 //        pendingIndex = index(ofAccessibilityElement: (pendingViewControllers.first as? CityVC))

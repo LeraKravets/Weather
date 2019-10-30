@@ -35,8 +35,12 @@ class CityVC: UIViewController {
 
         cityLabel.text = city?.cityName
         summaryLabel.text = city?.currentWeather?.summary
-        guard let currentTemp = city?.currentWeather?.currentTemp else { return }
-        tempLabel.text = String(Int(currentTemp))
+        if let currentTemp = city?.currentWeather?.currentTemp {
+            tempLabel.text = String(Int(currentTemp))
+        }
+//        backgroundImage = city.
+//        backgroundView.image = UIImage(named: <#T##String#>
+
 
 //        let setOfDailyWeather = city?.dailyWeathert as? Set<DailyWeather> ?? []
         setOfDailyWeather = city?.dailyWeathert as? Set<DailyWeather>
@@ -57,11 +61,6 @@ class CityVC: UIViewController {
 //            print(oneDayWeather)
 //        }
     }
-
-    @IBAction func backToMenuButtonTapped(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
-    }
-
 }
 
 extension CityVC: UITableViewDelegate {
