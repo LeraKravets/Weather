@@ -32,7 +32,7 @@ class PersistenceManager {
 
         let currentWeatherInfo = currentInfo["weather"] as? [[String: Any]]
         let currentIconInfo = currentWeatherInfo?.first
-        let currentIcon = currentIconInfo?["icon"] as? String
+        let currentWeatherIcon = currentIconInfo?["icon"] as? String
         let summary = currentIconInfo?["main"] as? String
         let currentMainInfo = currentInfo["main"] as? [String: Any]
         let currentTemp = currentMainInfo?["temp"] as? Double
@@ -81,6 +81,7 @@ class PersistenceManager {
         }
         city?.cityName = cityName
         city?.cityId = cityId
+        city?.weatherIcon = currentWeatherIcon
 //        if let cityTime = cityTime {
 //            city?.time = getDateFromStamp(timeInterval: cityTime)
 //        }
@@ -113,7 +114,7 @@ class PersistenceManager {
         if city?.currentWeather == nil {
             city?.currentWeather = NSEntityDescription.insertNewObject(forEntityName: "CurrentWeather", into: context) as? CurrentWeather
         }
-        city?.currentWeather?.currentIcon = currentIcon
+        city?.currentWeather?.currentIcon = currentWeatherIcon
         city?.currentWeather?.summary = summary
         if let currentTemp = currentTemp, let tempMin = tempMin, let tempMax = tempMax, let humidity = humidity, let pressure = pressure {
             city?.currentWeather?.currentTemp = round(currentTemp - 273.15)

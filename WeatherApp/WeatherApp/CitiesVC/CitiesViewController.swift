@@ -172,6 +172,11 @@ extension CitiesViewController: UITableViewDelegate {
         switch sectionIndex {
         case .cityInfo:
             goToCity(cities: cityInfo, currentWeather: currentWeatherItems, index: indexPath.row)
+            for eachCity in cityInfo {
+                if let cityName = eachCity.cityName {
+                    self.loadWeatherData(cityName: cityName)
+                }
+            }
         case .newCity:
             return
         }

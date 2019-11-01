@@ -16,6 +16,7 @@ class CitiesPVC: UIPageViewController {
     lazy var myPageControl: UIPageControl = {
         let pageControl = UIPageControl()
         pageControl.frame = CGRect(x: 0, y: view.frame.maxY - 60, width: UIScreen.main.bounds.width, height: 50)
+        guard arrayCityVC.count != 1 else { return pageControl }
         pageControl.numberOfPages = cities.count
         if let pageControlIndex = initialIndex {
             pageControl.currentPage = pageControlIndex
@@ -33,6 +34,10 @@ class CitiesPVC: UIPageViewController {
         button.addTarget(self, action: #selector(backToMenuButtonTapped), for: .touchUpInside)
         return button
     }()
+
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+          return .lightContent
+      }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -87,11 +92,13 @@ class CitiesPVC: UIPageViewController {
 
 extension CitiesPVC: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
+        guard arrayCityVC.count != 1 else { return nil }
         guard let currentVC = viewController as? CityVC else { return nil }
-        guard let previousCityIndex = arrayCityVC.firstIndex(of: currentVC) else { return nil }
-        if previousCityIndex > 0 {
-            return arrayCityVC[previousCityIndex - 1]
-        } else if previousCityIndex == 0 {
+        guard let index = arrayCityVC.firstIndex(of: currentVC) else { return nil }
+        let previousCityIndex = index - 1
+        if previousCityIndex >= 0 {
+            return arrayCityVC[previousCityIndex]
+        } else if index < 0 {
 //            return arrayCityVC[cities.count-1]
             return arrayCityVC.last
 
@@ -100,6 +107,7 @@ extension CitiesPVC: UIPageViewControllerDataSource, UIPageViewControllerDelegat
     }
 
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
+        guard arrayCityVC.count != 1 else { return nil }
         guard let currentVC = viewController as? CityVC else { return nil }
         guard let index = arrayCityVC.firstIndex(of: currentVC) else { return nil }
         let nextCityIndex = index + 1

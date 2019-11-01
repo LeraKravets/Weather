@@ -4,6 +4,7 @@
         <attribute name="cityId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="cityName" optional="YES" attributeType="String"/>
         <attribute name="time" optional="YES" attributeType="String"/>
+        <attribute name="weatherIcon" optional="YES" attributeType="String"/>
         <relationship name="country" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Country" inverseName="city" inverseEntity="Country"/>
         <relationship name="currentWeather" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="CurrentWeather" inverseName="city" inverseEntity="CurrentWeather"/>
         <relationship name="dailyWeathert" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="DailyWeather" inverseName="city" inverseEntity="DailyWeather"/>
@@ -38,7 +39,7 @@
         <relationship name="city" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="City" inverseName="location" inverseEntity="City"/>
     </entity>
     <elements>
-        <element name="City" positionX="-139.625" positionY="-25.84375" width="128" height="148"/>
+        <element name="City" positionX="-139.625" positionY="-25.84375" width="128" height="163"/>
         <element name="Country" positionX="-336.49609375" positionY="102.33984375" width="128" height="90"/>
         <element name="CurrentWeather" positionX="118.83203125" positionY="-10.234375" width="128" height="163"/>
         <element name="DailyWeather" positionX="-202.73046875" positionY="338.6953125" width="128" height="133"/>
