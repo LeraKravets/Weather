@@ -15,9 +15,9 @@ class CurrentWeatherTableViewCell: UITableViewCell {
     @IBOutlet weak var infoLabel1: UILabel!
     @IBOutlet weak var infoLabel2: UILabel!
 
-    private enum RowType: Int, CaseIterable {
-        case sunriseSunset, pressureHumidity, windVisibility
-    }
+//    private enum RowType: Int, CaseIterable {
+//        case sunriseSunset, pressureHumidity, windVisibility
+//    }
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -28,19 +28,33 @@ class CurrentWeatherTableViewCell: UITableViewCell {
     }
 
     func updateCurrentWeather(for city: City, by index: Int) {
-        let rowType = RowType(rawValue: index)
-        switch rowType {
-        case .sunriseSunset:
-            descriptionLable1.text = "SUNRISE"
-            descriptionLable2.text = "SUNSET"
-        case .pressureHumidity:
-            descriptionLable1.text = "PRESSURE"
-            descriptionLable2.text = "HUMIDITY"
-        case .windVisibility:
-            descriptionLable1.text = "WIND"
-            descriptionLable2.text = "VISIBILITY"
-        default:
-            return
+        let rowType = CityVC.RowType(rawValue: index)
+              switch rowType {
+              case .sunriseSunset:
+                  descriptionLable1.text = "SUNRISE"
+                  descriptionLable2.text = "SUNSET"
+              case .pressureHumidity:
+                  descriptionLable1.text = "PRESSURE"
+                  descriptionLable2.text = "HUMIDITY"
+              case .windVisibility:
+                  descriptionLable1.text = "WIND"
+                  descriptionLable2.text = "VISIBILITY"
+              default:
+                  return
+
+//        let rowType = RowType(rawValue: index)
+//        switch rowType {
+//        case .sunriseSunset:
+//            descriptionLable1.text = "SUNRISE"
+//            descriptionLable2.text = "SUNSET"
+//        case .pressureHumidity:
+//            descriptionLable1.text = "PRESSURE"
+//            descriptionLable2.text = "HUMIDITY"
+//        case .windVisibility:
+//            descriptionLable1.text = "WIND"
+//            descriptionLable2.text = "VISIBILITY"
+//        default:
+//            return
         }
 
 //        if let iconName = dailyWeatherInfo.dailyIcon {

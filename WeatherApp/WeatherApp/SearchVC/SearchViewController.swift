@@ -23,6 +23,9 @@ class SearchViewController: UIViewController {
 
     // MARK: - Properties
 
+    private var searchMamager: SearchManager { return SearchNamagers.chooseSearchManager() }
+    private var searchResults: [String] = []
+
     let cellID = "resultsCellId"
 
     weak var searchDelegate: SearchViewControllerDelegate?
@@ -36,6 +39,9 @@ class SearchViewController: UIViewController {
 
 
     // MARK: - Life Cycle
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+         return .lightContent
+     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,13 +51,21 @@ class SearchViewController: UIViewController {
 //        searchController.searchResultsUpdater = self
         // 2
         searchController.obscuresBackgroundDuringPresentation = false
-        // 3
-//        searchController.searchBar.placeholder = "Search Candies"
+
         // 4
         navigationItem.searchController = searchController
         // 5
         definesPresentationContext = true
+    }
 
+    func doSearch(_ text: String?) {
+        guard let text = text else { return }
+        searchMamager.performSearch(text: text) { results in
+            self.searchResults = results
+            self.resultsTableView.reloadData()
+            
+        }
+        
     }
 
     // MARK: - Parsing local JSON file   "city.list.min"
@@ -96,24 +110,30 @@ class SearchViewController: UIViewController {
 extension SearchViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if searching {
-            return searchCity.count
-        } else {
-            return citiesNameArr.count
-        }
+//        if searching {
+//            return searchCity.count
+//        } else {
+//            return citiesNameArr.count
+//        }
+        searchResults.count
+
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellID) as? SearchTableViewCell
-            else {
-                fatalError("Can't find cell with id: \(cellID)")
-        }
-        if searching {
-            cell.searchCityLable.text = searchCity[indexPath.row]
-        } else {
-            cell.searchCityLable.text = citiesNameArr[indexPath.row]
-        }
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
+        cell.textLabel?.text = searchResults[indexPath.row]
         return cell
+
+//        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellID) as? SearchTableViewCell
+//            else {
+//                fatalError("Can't find cell with id: \(cellID)")
+//        }
+//        if searching {
+//            cell.searchCityLable.text = searchCity[indexPath.row]
+//        } else {
+//            cell.searchCityLable.text = citiesNameArr[indexPath.row]
+//        }
+//        return cell
     }
 }
 
@@ -121,20 +141,25 @@ extension SearchViewController: UITableViewDataSource {
 
 extension SearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if searching {
-            self.searchDelegate?.didSelectCity(cityName: searchCity[indexPath.row])
-        } else {
-            self.searchDelegate?.didSelectCity(cityName: citiesNameArr[indexPath.row])
-        }
+        self.searchDelegate?.didSelectCity(cityName: searchResults[indexPath.row])
+//        if searching {
+//            self.searchDelegate?.didSelectCity(cityName: searchCity[indexPath.row])
+//        } else {
+//            self.searchDelegate?.didSelectCity(cityName: citiesNameArr[indexPath.row])
+//        }
         dismiss(animated: true, completion: nil)
     }
 }
 
 extension SearchViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        searchCity = citiesNameArr.filter({ $0.prefix(searchText.count) == searchText })
-        searching = true
-        resultsTableView.reloadData()
+        doSearch(searchText)
+//        searchCity = searchResults.filter({ $0.prefix(searchText.count) == searchText })
+//        resultsTableView.reloadData()
+        
+//        searchCity = citiesNameArr.filter({ $0.prefix(searchText.count) == searchText })
+//        searching = true
+//        resultsTableView.reloadData()
     }
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         dismiss(animated: true, completion: nil)

@@ -16,8 +16,6 @@ class PersistenceManager {
     private init() {}
 
     func saveWeatherInfo(currentInfo: [String: Any], dailyInfo: [String: Any]) {
-//        print(currentInfo)
-
         let locationInfo = currentInfo["coord"] as? [String: Any]
         let latitude = locationInfo?["lat"] as? Double
         let longitude = locationInfo?["lon"] as? Double

@@ -98,12 +98,9 @@ extension CitiesPVC: UIPageViewControllerDataSource, UIPageViewControllerDelegat
         let previousCityIndex = index - 1
         if previousCityIndex >= 0 {
             return arrayCityVC[previousCityIndex]
-        } else if index < 0 {
-//            return arrayCityVC[cities.count-1]
+        } else {
             return arrayCityVC.last
-
         }
-        return nil
     }
 
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {

@@ -19,6 +19,10 @@ class CityVC: UIViewController {
 
 //    @IBOutlet weak var citiesPageControl: UIPageControl!
 
+    enum RowType: Int, CaseIterable {
+        case sunriseSunset, pressureHumidity, windVisibility
+    }
+
     var city: City?
     var setOfDailyWeather: Set<DailyWeather>?
     var arrayOfDailyWeather: [DailyWeather]?
@@ -42,7 +46,8 @@ class CityVC: UIViewController {
         if let currentTemp = city?.currentWeather?.currentTemp {
             tempLabel.text = String(Int(currentTemp))
         }
-        guard let backgroundImage = city?.weatherIcon else { return }
+        guard let city = city else { return }
+        guard let backgroundImage = city.weatherIcon else { return }
         switch backgroundImage {
         case "03d":
             backgroundView.image = UIImage(named: "04d")
@@ -55,6 +60,9 @@ class CityVC: UIViewController {
         default:
             backgroundView.image = UIImage(named: backgroundImage)
         }
+
+
+
 
 //        let setOfDailyWeather = city?.dailyWeathert as? Set<DailyWeather> ?? []
 //        setOfDailyWeather = city?.dailyWeathert as? Set<DailyWeather>
@@ -112,9 +120,8 @@ extension CityVC: UITableViewDataSource {
         case .dailyWeather:
             return setOfDailyWeather?.count ?? 0
         case .currentWeather:
-            return 3  //How to get RowType from CurrentWeatherTableViewCell
+            return RowType.allCases.count  //How to get RowType from CurrentWeatherTableViewCell
         }
-
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -128,6 +135,7 @@ extension CityVC: UITableViewDataSource {
             }
             if let arrayOfDailyWeather = arrayOfDailyWeather {
                 cell.updateDailyWeather(dailyWeatherInfo: arrayOfDailyWeather[indexPath.row])
+//                cell.updateDailyWeather(withIndex: indexPath.row)
             }
             return cell
         case .currentWeather:

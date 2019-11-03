@@ -14,8 +14,10 @@ class CityTableViewCell: UITableViewCell {
 
     @IBOutlet weak var cityNameLabel: UILabel!
     @IBOutlet weak var temperatureLabel: UILabel!
-    
+    @IBOutlet weak var backgroundImageView: UIImageView!
+
     // MARK: - Properties
+
 
 //    weak var delegate: CitiesViewController?
 
@@ -37,7 +39,19 @@ class CityTableViewCell: UITableViewCell {
     func update(currentInfo weatherItem: CurrentWeather, and cityItem: City) {
         temperatureLabel.text = String(Int(weatherItem.currentTemp))
         cityNameLabel.text = cityItem.cityName
-//        timeLabel.text = cityItem.time
+        guard let backgroundImage = cityItem.weatherIcon else { return }
+        switch backgroundImage {
+        case "03d":
+            backgroundImageView.image = UIImage(named: "04d")
+        case "03n":
+            backgroundImageView.image = UIImage(named: "04n")
+        case "10d":
+            backgroundImageView.image = UIImage(named: "09d")
+        case "10n":
+            backgroundImageView.image = UIImage(named: "09n")
+        default:
+            backgroundImageView.image = UIImage(named: backgroundImage)
+        }
     }
 
     // MARK: - Actions

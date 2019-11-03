@@ -21,9 +21,6 @@ class CitiesViewController: UIViewController {
 //    var dailyWeatherItems: [DailyWeather] = PersistenceManager.shared.fetchDailyWeather()
 //    var cityID: [Int16] = []
 
-//    var timer: Timer?
-
-
     private let cityCellID = "CityCellID"
     private let addCityCellId = "AddCityCellID"
 
@@ -33,6 +30,9 @@ class CitiesViewController: UIViewController {
     }
 
     // MARK: - Life Cycle
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -141,6 +141,9 @@ extension CitiesViewController: UITableViewDataSource {
                     fatalError("Can't find cell with id: \(cityCellID)")
             }
 //            cell.delegate = self
+//            if let cityName = cityInfo[indexPath.row].cityName {
+//                loadWeatherData(cityName: cityName)
+//            }
             cell.update(currentInfo: currentWeatherItems[indexPath.row], and: cityInfo[indexPath.row])
             return cell
 
@@ -161,6 +164,9 @@ extension CitiesViewController: UITableViewDataSource {
 extension CitiesViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.row == 0 {
+            return 124.0
+        }
         return 80.0
     }
 
