@@ -40,17 +40,8 @@ class DailyWeatherTableViewCell: UITableViewCell {
         print(dailyWeatherInfo.dailyIcon)
         maxTempLabel.text = String(dailyWeatherInfo.tempMax)
         minTempLabel.text = String(dailyWeatherInfo.tempMin)
-        weekDayLabel.text = getDateFromStamp(Int(dailyWeatherInfo.date))
+        if let timezone = dailyWeatherInfo.city?.timezone {
+            weekDayLabel.text = (dailyWeatherInfo.date).TimeFormatter(timeFormat: .dayOfWeek, timeZone: timezone)
+        }
     }
-
-    func getDateFromStamp(_ today: Int) -> String {
-         let date = NSDate(timeIntervalSince1970: TimeInterval(today))
-         let dateFormatter = DateFormatter()
-         dateFormatter.dateFormat = "E"
-//         let dateString = dateFormatter.string(from: date as Date)
-        let myCalendar = Calendar(identifier: .gregorian)
-        let weekDay = myCalendar.component(.weekday, from: date as Date)
-        let weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
-        return weekdays[weekDay - 1]
-     }
 }

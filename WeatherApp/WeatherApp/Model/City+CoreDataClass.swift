@@ -2,7 +2,7 @@
 //  City+CoreDataClass.swift
 //  WeatherApp
 //
-//  Created by Лера on 10/30/19.
+//  Created by Лера on 11/4/19.
 //  Copyright © 2019 com.vkravets. All rights reserved.
 //
 //

@@ -32,13 +32,28 @@ class CurrentWeatherTableViewCell: UITableViewCell {
               switch rowType {
               case .sunriseSunset:
                   descriptionLable1.text = "SUNRISE"
+                  let timeZone = city.timezone
+                  infoLabel1.text = city.currentWeather?.sunrise.TimeFormatter(timeFormat: .hourMinutes, timeZone: timeZone)
                   descriptionLable2.text = "SUNSET"
+                  infoLabel2.text = city.currentWeather?.sunset.TimeFormatter(timeFormat: .hourMinutes, timeZone: timeZone)
               case .pressureHumidity:
                   descriptionLable1.text = "PRESSURE"
+                  if let pressure = city.currentWeather?.pressure {
+                    infoLabel1.text = String(Int(pressure)) + " hPa"
+                  }
                   descriptionLable2.text = "HUMIDITY"
+                if let humidity = city.currentWeather?.humidity {
+                  infoLabel2.text = String(Int(humidity)) + " %"
+                }
               case .windVisibility:
                   descriptionLable1.text = "WIND"
+                  if let windSpeed = city.currentWeather?.windSpeed {
+                    infoLabel1.text = String(Int(windSpeed)) + " km/h"
+                  }
                   descriptionLable2.text = "VISIBILITY"
+                if let visibility = city.currentWeather?.visibility {
+                  infoLabel2.text = String(Int(visibility)) + " km"
+                }
               default:
                   return
 

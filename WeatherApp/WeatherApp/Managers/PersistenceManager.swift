@@ -23,10 +23,14 @@ class PersistenceManager {
         let countryInfo = currentInfo["sys"] as? [String: Any]
         let countryId = countryInfo?["id"] as? Int16
         let countryName = countryInfo?["country"] as? String
+        let sunrise = countryInfo?["sunrise"] as? Int64
+        let sunset = countryInfo?["sunset"] as? Int64
+        
 
         guard let cityId = currentInfo["id"] as? Int64 else { return }
         let cityName = currentInfo["name"] as? String
         let cityTime = currentInfo["dt"] as? Int
+        let cityTimeZone = currentInfo["timezone"] as? Int64
 
         let currentWeatherInfo = currentInfo["weather"] as? [[String: Any]]
         let currentIconInfo = currentWeatherInfo?.first
@@ -38,6 +42,12 @@ class PersistenceManager {
         let pressure = currentMainInfo?["pressure"] as? Double
         let tempMin = currentMainInfo?["temp_min"] as? Double
         let tempMax = currentMainInfo?["temp_max"] as? Double
+
+        let visibility = currentInfo["visibility"] as? Double
+        let wind = currentInfo["wind"] as? [String: Any]
+        let windSpeed = wind?["speed"] as? Double
+
+
 
         guard let dailyWeatherInfo = dailyInfo["data"] as? [[String: Any]] else { return }
 
@@ -80,6 +90,9 @@ class PersistenceManager {
         city?.cityName = cityName
         city?.cityId = cityId
         city?.weatherIcon = currentWeatherIcon
+        if let cityTimeZone = cityTimeZone {
+            city?.timezone = cityTimeZone
+        }
 //        if let cityTime = cityTime {
 //            city?.time = getDateFromStamp(timeInterval: cityTime)
 //        }
@@ -114,38 +127,18 @@ class PersistenceManager {
         }
         city?.currentWeather?.currentIcon = currentWeatherIcon
         city?.currentWeather?.summary = summary
-        if let currentTemp = currentTemp, let tempMin = tempMin, let tempMax = tempMax, let humidity = humidity, let pressure = pressure {
+        if let currentTemp = currentTemp, let tempMin = tempMin, let tempMax = tempMax, let humidity = humidity, let pressure = pressure, let visibility = visibility, let windSpeed = windSpeed, let sunset = sunset, let sunrise = sunrise {
             city?.currentWeather?.currentTemp = round(currentTemp - 273.15)
             city?.currentWeather?.tempMin = round(tempMin - 273.15)
             city?.currentWeather?.tempMax = round(tempMax - 273.15)
             city?.currentWeather?.humidity = round(humidity)
             city?.currentWeather?.pressure = round(pressure)
+            city?.currentWeather?.visibility = (visibility / 1000).roundToDecimal(1)
+            city?.currentWeather?.windSpeed = round(windSpeed)
+            city?.currentWeather?.sunset = sunset
+            city?.currentWeather?.sunrise = sunrise
         }
-
-
-
-//        var dailyWeather: DailyWeather?
-//
-//        let dailyWeatherRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "DailyWeather")
-//        dailyWeatherRequest.predicate = NSPredicate(format: "cityName = %@", cityNam)
-//        do {
-//            let dailyWeatherArray = try? context.fetch(dailyWeatherRequest) as? [DailyWeather]
-//            dailyWeather = dailyWeatherArray?.first
-//        }
-//
-//        if dailyWeather == nil {
-//            dailyWeather = NSEntityDescription.insertNewObject(forEntityName: "DailyWeather",
-//                                                       into: context) as? DailyWeather
-//        }
-
-//        var dailyWeathers = city?.dailyWeathert?.allObjects as NSArray?
         var dailyWeather: DailyWeather?
-//        if city?.dailyWeathert?.allObjects.first == nil {
-//            dailyWeather = NSEntityDescription.insertNewObject(forEntityName: "DailyWeather",
-//            into: context) as? DailyWeather
-//        }
-
-
 
         for item in city?.dailyWeathert ?? [] {
             context.delete(item as! NSManagedObject)

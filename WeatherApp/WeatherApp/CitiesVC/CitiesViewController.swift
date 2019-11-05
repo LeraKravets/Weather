@@ -36,13 +36,17 @@ class CitiesViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        createTimer()
     }
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         citiesTableView.reloadData()
+        for city in cityInfo {
+            if let cityName = city.cityName {
+                loadWeatherData(cityName: cityName)
+            }
+        }
     }
-
 
     // MARK: - Helper Methods
 

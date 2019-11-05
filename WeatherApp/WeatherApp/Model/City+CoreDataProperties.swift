@@ -2,7 +2,7 @@
 //  City+CoreDataProperties.swift
 //  WeatherApp
 //
-//  Created by Лера on 10/30/19.
+//  Created by Лера on 11/4/19.
 //  Copyright © 2019 com.vkravets. All rights reserved.
 //
 //
@@ -21,6 +21,7 @@ extension City {
     @NSManaged public var cityName: String?
     @NSManaged public var time: String?
     @NSManaged public var weatherIcon: String?
+    @NSManaged public var timezone: Int64
     @NSManaged public var country: Country?
     @NSManaged public var currentWeather: CurrentWeather?
     @NSManaged public var dailyWeathert: NSSet?
