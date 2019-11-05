@@ -18,7 +18,7 @@ class NetworkManager {
     func downloadWeatherData(targetCity: String, completionHandler: @escaping ([String: Any]?, [String: Any]?) -> Void) {
         let formattedtargetCity = targetCity.replacingOccurrences(of: " ", with: "%20")
         let resourceString1 =  "https://api.openweathermap.org/data/2.5/weather?q=\(formattedtargetCity)&APPID=5fd0c255bfc224e83c8160bb7241d760"
-        let resourceString2 =  "https://api.weatherbit.io/v2.0/forecast/daily?city=\(formattedtargetCity)&key=b883a022667c489090772840866e0102&days=3"
+        let resourceString2 =  "https://api.weatherbit.io/v2.0/forecast/daily?city=\(formattedtargetCity)&key=b883a022667c489090772840866e0102&days=7"
 
         guard let resourceURL1 = URL(string: resourceString1) else { fatalError() }
         guard let resourceURL2 = URL(string: resourceString2) else { fatalError() }

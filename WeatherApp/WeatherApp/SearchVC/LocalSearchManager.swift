@@ -21,25 +21,20 @@ class LocalSearchManager: SearchManager {
         searchQueue.cancelAllOperations()
         searchQueue.addOperation { [weak self] in
         guard let self = self else { return }
-        let results = self.info.filter { $0.starts(with: text) }
+        guard let url = Bundle.main.url(forResource: "city.list.min", withExtension: "json") else { fatalError() }
+        do {
+            let jsonData = try Data(contentsOf: url)
+            guard let json = try JSONSerialization.jsonObject(with: jsonData) as? [[String: Any]] else { return }
+            let citiesNameArr = json.compactMap({ $0["name"] }) as? [String] ?? []
+            let results = citiesNameArr.filter({ $0.starts(with: text) })
 
             DispatchQueue.main.async {
                 completion(results)
             }
+        } catch {
+            print(error)
+        }
+
         }
     }
-
-    private let info = ["Mina, United States",
-    "Mina, United States",
-    "Minatare, United States",
-    "MINBUN, Australia",
-    "Minburn, United States",
-    "Minco, United States",
-    "Mindelo, Cape Verde",
-    "Minden City, United States",
-    "Minden, United States",
-    "Minden, United States",
-    "Minden, United States",
-    "Minden, United States"]
-    
 }
