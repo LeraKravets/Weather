@@ -16,10 +16,7 @@ class CitiesViewController: UIViewController {
 
     // MARK: - Properties
 
-    var currentWeatherItems: [CurrentWeather] = PersistenceManager.shared.fetchCurrentWeather()
     var cityInfo: [City] = PersistenceManager.shared.fetchCityInfo()
-//    var dailyWeatherItems: [DailyWeather] = PersistenceManager.shared.fetchDailyWeather()
-//    var cityID: [Int16] = []
 
     private let cityCellID = "CityCellID"
     private let addCityCellId = "AddCityCellID"
@@ -36,11 +33,6 @@ class CitiesViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        citiesTableView.reloadData()
         for city in cityInfo {
             if let cityName = city.cityName {
                 loadWeatherData(cityName: cityName)
@@ -48,54 +40,24 @@ class CitiesViewController: UIViewController {
         }
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        citiesTableView.reloadData()
+
+    }
+
     // MARK: - Helper Methods
-
-//    func loadNewCityData(cityName: String) {
-//
-//        NetworkManager.shared.loadCurrentWeather(targetCity: cityName) { [weak self] (weatherInformation) in
-//            guard let self = self, let weatherCurrentInfo = weatherInformation else { return }
-//
-//            PersistenceManager.shared.saveCurrentWeatherInfo(info: weatherCurrentInfo)
-//            self.cityInfo = PersistenceManager.shared.fetchCityInfo()
-//            self.currentWeatherItems = PersistenceManager.shared.fetchCurrentWeather()
-//
-//            DispatchQueue.main.async {
-//                self.citiesTableView.reloadData()
-//            }
-//        }
-//    }
-
-//    func loadDailyWeather(cityName: String) {
-//
-//        NetworkManager.shared.loadDailyWeather(targetCity: cityName) { [weak self] (weatherInformation) in
-//            guard let self = self, let weatherCurrentInfo = weatherInformation else { return }
-//
-//            PersistenceManager.shared.saveDailyWeatherInfo(info: weatherCurrentInfo)
-//            self.dailyWeatherItems = PersistenceManager.shared.fetchDailyWeather()
-//
-//            DispatchQueue.main.async {
-//                self.citiesTableView.reloadData()
-//            }
-//        }
-//    }
 
     func loadWeatherData(cityName: String) {
         NetworkManager.shared.downloadWeatherData(targetCity: cityName) { [weak self] (currentWeather, dailyWeather) in
             guard let self = self, let currentWeather = currentWeather, let dailyWeather = dailyWeather else { return }
             PersistenceManager.shared.saveWeatherInfo(currentInfo: currentWeather, dailyInfo: dailyWeather)
-//            PersistenceManager.shared.saveCurrentWeatherInfo(currentWeatherInfo: currentWeather)
-//            PersistenceManager.shared.saveDailyWeatherInfo(info: dailyWeather)
-            self.currentWeatherItems = PersistenceManager.shared.fetchCurrentWeather()
             self.cityInfo = PersistenceManager.shared.fetchCityInfo()
-//            self.dailyWeatherItems = PersistenceManager.shared.fetchDailyWeather()
-
             DispatchQueue.main.async {
                 self.citiesTableView.reloadData()
             }
         }
     }
-
-
 
     func goToSearch() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -105,14 +67,12 @@ class CitiesViewController: UIViewController {
         self.present(searchVC, animated: true, completion: nil)
     }
 
-    func goToCity(cities: [City], currentWeather: [CurrentWeather], index: Int) {
+    func goToCity(cities: [City], index: Int) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         guard let citiesPVC = storyboard.instantiateViewController(withIdentifier: "CitiesPVC") as? CitiesPVC else { return }
-//        let weatherInfo = ["citiesArray": cities, "index": index] as [String : Any]
-//        NotificationCenter.default.post(name: CitiesPVC.notificationName, object: nil, userInfo: weatherInfo)
         citiesPVC.cities = cities
         citiesPVC.initialIndex = index
-        citiesPVC.modalPresentationStyle = .fullScreen //or .overFullScreen for transparency
+        citiesPVC.modalPresentationStyle = .fullScreen
         self.present(citiesPVC, animated: true, completion: nil)
     }
 }
@@ -144,11 +104,7 @@ extension CitiesViewController: UITableViewDataSource {
                 else {
                     fatalError("Can't find cell with id: \(cityCellID)")
             }
-//            cell.delegate = self
-//            if let cityName = cityInfo[indexPath.row].cityName {
-//                loadWeatherData(cityName: cityName)
-//            }
-            cell.update(currentInfo: currentWeatherItems[indexPath.row], and: cityInfo[indexPath.row])
+            cell.update(cityItem: cityInfo[indexPath.row])
             return cell
 
         case .newCity:
@@ -181,7 +137,7 @@ extension CitiesViewController: UITableViewDelegate {
         }
         switch sectionIndex {
         case .cityInfo:
-            goToCity(cities: cityInfo, currentWeather: currentWeatherItems, index: indexPath.row)
+            goToCity(cities: cityInfo, index: indexPath.row)
             for eachCity in cityInfo {
                 if let cityName = eachCity.cityName {
                     self.loadWeatherData(cityName: cityName)
@@ -207,8 +163,6 @@ extension CitiesViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             PersistenceManager.shared.deleteCityInfoItem(in: &cityInfo, by: indexPath.row)
-            PersistenceManager.shared.deleteCurrentWeatherInfoItem(in: &currentWeatherItems, by: indexPath.row)
-//            PersistenceManager.shared.deleteDailyWeatherInfoItem(in: &dailyWeatherItems, by: indexPath.row)
             cityInfo.remove(at: indexPath.row)
             citiesTableView.reloadData()
         }
@@ -219,41 +173,5 @@ extension CitiesViewController: SearchViewControllerDelegate {
 
     func didSelectCity(cityName: String) {
         self.loadWeatherData(cityName: cityName)
-//        self.loadNewCityData(cityName: cityName)
-//        self.loadDailyWeather(cityName: cityName)
     }
 }
-
-
-
-
-
-
-
-//extension CitiesViewController {
-//    func createTimer() {
-//
-//        if timer == nil {
-//
-//            let timer = Timer.scheduledTimer(timeInterval: 1.0,
-//                                         target: self,
-//                                         selector: #selector(updateTimer),
-//                                         userInfo: nil,
-//                                         repeats: true)
-//            RunLoop.current.add(timer, forMode: .common)
-//            timer.tolerance = 0.1
-//
-//            self.timer = timer
-//        }
-//    }
-//
-//    @objc func updateTimer() {
-//        guard let visibleRowsIndexPaths = citiesTableView.indexPathsForVisibleRows else { return }
-//
-//        for indexPath in visibleRowsIndexPaths {
-//            if let cell = citiesTableView.cellForRow(at: indexPath) as? CityTableViewCell {
-//                loadData(cityName: self.cityInfo[indexPath.row].cityName!)
-//            }
-//        }
-//    }
-//}

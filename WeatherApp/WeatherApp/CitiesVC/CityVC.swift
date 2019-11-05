@@ -14,10 +14,7 @@ class CityVC: UIViewController {
     @IBOutlet weak var summaryLabel: UILabel!
     @IBOutlet weak var tempLabel: UILabel!
     @IBOutlet weak var backgroundView: UIImageView!
-
     @IBOutlet weak var dailyWeatherTableView: UITableView!
-
-//    @IBOutlet weak var citiesPageControl: UIPageControl!
 
     enum RowType: Int, CaseIterable {
         case sunriseSunset, pressureHumidity, windVisibility
@@ -60,28 +57,6 @@ class CityVC: UIViewController {
         default:
             backgroundView.image = UIImage(named: backgroundImage)
         }
-
-
-
-
-//        let setOfDailyWeather = city?.dailyWeathert as? Set<DailyWeather> ?? []
-//        setOfDailyWeather = city?.dailyWeathert as? Set<DailyWeather>
-//        arrayOfDailyWeather = setOfDailyWeather?.sorted(by: { $0.date < $1.date })
-
-
-       
-
-
-
-//        for oneDayWeather in setOfDailyWeather {
-//            let dailyTemp = oneDayWeather.dailyTemp
-//            let dailyIcon = oneDayWeather.dailyIcon
-//            let tempMax = oneDayWeather.tempMax
-//            let tempMin = oneDayWeather.tempMin
-//            let date = oneDayWeather.date
-//
-//            print(oneDayWeather)
-//        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -120,7 +95,7 @@ extension CityVC: UITableViewDataSource {
         case .dailyWeather:
             return setOfDailyWeather?.count ?? 0
         case .currentWeather:
-            return RowType.allCases.count  //How to get RowType from CurrentWeatherTableViewCell
+            return RowType.allCases.count
         }
     }
     
@@ -149,6 +124,4 @@ extension CityVC: UITableViewDataSource {
         }
 
     }
-    
-
 }

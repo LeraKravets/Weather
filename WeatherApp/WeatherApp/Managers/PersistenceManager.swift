@@ -51,28 +51,7 @@ class PersistenceManager {
 
         guard let dailyWeatherInfo = dailyInfo["data"] as? [[String: Any]] else { return }
 
-//        var dailyWeatherArray: [DailyWeatherStruct] = []
-//
-//        for currentDailyWeather in dailyWeatherInfo {
-//            var dailyWeather = DailyWeatherStruct()
-//            dailyWeather.dailyMinTemp = currentDailyWeather["min_temp"] as? Double
-//            dailyWeather.dailyMaxTemp = currentDailyWeather["max_temp"] as? Double
-//            dailyWeather.dailyDate = currentDailyWeather["ts"] as? Int
-//            let dailyWeatherAdditionalInfo = currentDailyWeather["weather"] as? [String: Any]
-//            dailyWeather.dailyWeatherIcon = dailyWeatherAdditionalInfo?["icon"] as? String
-//
-//            dailyWeatherArray.append(dailyWeather)
-//        }
-
-//        let dailyMainInfo = dailyWeatherInfo?[0]
-//        guard let dailyMinTemp = dailyMainInfo?["min_temp"] as? Double else { return }
-//        guard let dailyMaxTemp = dailyMainInfo?["max_temp"] as? Double else { return }
-//        let dailyDate = dailyMainInfo?["ts"] as? Int
-//        let dailyWeatherAdditionalInfo = dailyMainInfo?["weather"] as? [String: Any]
-//        let dailyWeatherIcon = dailyWeatherAdditionalInfo?["icon"] as? String
-//        guard let cityNam = dailyInfo["city_name"] as? String else { return }
-
-		// Saving/updating City Entity
+//        Saving/updating City Entity
 
         var city: City?
 
@@ -93,11 +72,8 @@ class PersistenceManager {
         if let cityTimeZone = cityTimeZone {
             city?.timezone = cityTimeZone
         }
-//        if let cityTime = cityTime {
-//            city?.time = getDateFromStamp(timeInterval: cityTime)
-//        }
 
-        // Saving/updating Country Entity
+//        Saving/updating Country Entity
 
         if city?.country == nil {
             city?.country = NSEntityDescription.insertNewObject(forEntityName: "Country",
@@ -108,7 +84,7 @@ class PersistenceManager {
             city?.country?.countryId = countryId
         }
 
-        // Saving/updating Location Entity
+//        Saving/updating Location Entity
 
         if city?.location == nil {
             city?.location = NSEntityDescription.insertNewObject(forEntityName: "Location",
@@ -119,8 +95,7 @@ class PersistenceManager {
             city?.location?.longitude = longitude
         }
 
- 
-        // Saving/updating CurrentWeather Entity
+//        Saving/updating CurrentWeather Entity
 
         if city?.currentWeather == nil {
             city?.currentWeather = NSEntityDescription.insertNewObject(forEntityName: "CurrentWeather", into: context) as? CurrentWeather
@@ -138,7 +113,7 @@ class PersistenceManager {
             city?.currentWeather?.sunset = sunset
             city?.currentWeather?.sunrise = sunrise
         }
-        var dailyWeather: DailyWeather?
+//        var dailyWeather: DailyWeather?
 
         for item in city?.dailyWeathert ?? [] {
             context.delete(item as! NSManagedObject)
@@ -160,49 +135,8 @@ class PersistenceManager {
                 dailyWeather.dailyIcon = dailyWeatherIcon
                 city?.addToDailyWeathert(dailyWeather)
             }
-
-
-
-
-//            dailyWeather?.tempMin = oneDayWeather["min_temp"] as? Double ?? 0
-//            dailyWeather?.tempMax = oneDayWeather["max_temp"] as? Double ?? 0
-////            guard let dayTime = oneDayWeather["ts"] as? Int else { return }
-////            dailyWeather?.date = getDateFromStamp(timeInterval: dayTime)
-//            dailyWeather?.date = oneDayWeather["ts"] as? Int64 ?? 0
-//            guard let dailyWeatherAdditionalInfo = oneDayWeather["weather"] as? [String: Any] else { return }
-//            dailyWeather?.dailyIcon = dailyWeatherAdditionalInfo["icon"] as? String
-//            if let dailyWeather = dailyWeather {
-//                city?.addToDailyWeathert(dailyWeather)
-//            }
         }
-//        for i in 0...dailyWeatherInfo.count - 1 {
-//            let dailyMainInfo = dailyWeatherInfo[i]
-//            dailyWeather?.tempMin = dailyMainInfo["min_temp"] as? Double ?? 0
-//            dailyWeather?.tempMax = dailyMainInfo["max_temp"] as? Double ?? 0
-//            guard let dayTime = dailyMainInfo["ts"] as? Int else { return }
-//            dailyWeather?.date = getDateFromStamp(timeInterval: dayTime)
-//            guard let dailyWeatherAdditionalInfo = dailyMainInfo["weather"] as? [String: Any] else { return }
-//            dailyWeather?.dailyIcon = dailyWeatherAdditionalInfo["icon"] as? String
-//            if let dailyWeather = dailyWeather {
-//                city?.addToDailyWeathert(dailyWeather)
-//            }
-//        }
         print(city?.dailyWeathert)
-
-
-
-//        let dailyWeathertArray = dailyWeatherInfo
-//        for i in 0...dailyWeatherInfo.count {
-//            let dailyMainInfo = dailyWeatherInfo[i]
-//            city?.dailyWeathert?.tempMin = dailyMinTemp
-//            city?.dailyWeathert?.tempMax = dailyMaxTemp
-//            city?.dailyWeathert?.dailyIcon = dailyWeatherIcon
-//        }
-
-
-//        if let dailyDate = dailyDate {
-//            dailyWeather?.date = getDateFromStamp(timeInterval: dailyDate)
-//        }
 
         saveContext()
     }
@@ -231,38 +165,13 @@ class PersistenceManager {
         return []
     }
 
-//    func fetchDailyWeather() -> [DailyWeather] {
-//        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "DailyWeather")
-//        do {
-//            let item = try context.fetch(fetchRequest) as? [DailyWeather]
-//            return item ?? []
-//        } catch let error {
-//            print(error)
-//        }
-//        return []
-//    }
-
-
     // MARK: - Core Data Deleting support
 
     func deleteCityInfoItem(in array: inout [City], by index: Int) {
         let item = array[index]
         context.delete(item)
-//        array.remove(at: index)
         saveContext()
     }
-
-    func deleteCurrentWeatherInfoItem(in array: inout [CurrentWeather], by index: Int) {
-        let item = array[index]
-        context.delete(item)
-        saveContext()
-    }
-
-//    func deleteDailyWeatherInfoItem(in array: inout [DailyWeather], by index: Int) {
-//           let item = array[index]
-//           context.delete(item)
-//           saveContext()
-//       }
 
     // MARK: - Core Data Context
 
@@ -305,44 +214,4 @@ class PersistenceManager {
         let dateString = dateFormatter.string(from: date as Date)
         return dateString
     }
-
-//    func saveDailyWeatherInfo(info: [String: Any]) {
-//        print(info)
-//
-//        let dailyWeatherInfo = info["data"] as? [[String: Any]]
-//        let dailyMainInfo = dailyWeatherInfo?[0]
-//        guard let dailyMinTemp = dailyMainInfo?["min_temp"] as? Double else { return }
-//        guard let dailyMaxTemp = dailyMainInfo?["max_temp"] as? Double else { return }
-//        let dailyDate = dailyMainInfo?["ts"] as? Int
-//        let dailyWeatherAdditionalInfo = dailyMainInfo?["weather"] as? [String: Any]
-//        let dailyWeatherIcon = dailyWeatherAdditionalInfo?["icon"] as? String
-//        guard let cityName = info["city_name"] as? String else { return }
-
-        // Saving/updating DailyWeather Entity
-
-//        var dailyWeather: DailyWeather?
-//
-//        let dailyWeatherRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "DailyWeather")
-//        dailyWeatherRequest.predicate = NSPredicate(format: "cityName = %@", cityName)
-//        do {
-//            let dailyWeatherArray = try? context.fetch(dailyWeatherRequest) as? [DailyWeather]
-//            dailyWeather = dailyWeatherArray?.first
-//        }
-//
-//        if dailyWeather == nil {
-//            dailyWeather = NSEntityDescription.insertNewObject(forEntityName: "DailyWeather",
-//                                                       into: context) as? DailyWeather
-//        }
-//
-//        dailyWeather?.tempMin = dailyMinTemp
-//        dailyWeather?.tempMax = dailyMaxTemp
-//        dailyWeather?.dailyIcon = dailyWeatherIcon
-//
-//        if let dailyDate = dailyDate {
-//            dailyWeather?.date = getDateFromStamp(timeInterval: dailyDate)
-//        }
-//        saveContext()
-//    }
-
 }
-

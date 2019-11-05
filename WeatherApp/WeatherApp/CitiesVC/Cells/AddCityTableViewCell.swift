@@ -33,7 +33,6 @@ class AddCityTableViewCell: UITableViewCell {
     // MARK: - Actions
 
     @IBAction func addCityButton(_ sender: Any) {
-//        delegate?.switchToNewVC()
 	addCityHandler?()
     }
 }

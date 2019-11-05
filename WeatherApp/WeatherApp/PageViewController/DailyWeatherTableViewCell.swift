@@ -23,16 +23,6 @@ class DailyWeatherTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
 
-//        func updateDailyWeather(withIndex: Int) {
-//        if let iconName = dailyWeatherInfo.dailyIcon {
-//            weatherIconImageView.image = UIImage(named: iconName)
-//        }
-//        print(dailyWeatherInfo.dailyIcon)
-//        maxTempLabel.text = String(dailyWeatherInfo.tempMax)
-//        minTempLabel.text = String(dailyWeatherInfo.tempMin)
-//        weekDayLabel.text = getDateFromStamp(Int(dailyWeatherInfo.date))
-//    }
-
     func updateDailyWeather(dailyWeatherInfo: DailyWeather) {
         if let iconName = dailyWeatherInfo.dailyIcon {
             weatherIconImageView.image = UIImage(named: iconName)

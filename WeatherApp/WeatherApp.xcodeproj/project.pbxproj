@@ -26,8 +26,6 @@
 		CFBDFF2023310B3600C50B4E /* CityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFBDFF1F23310B3600C50B4E /* CityTableViewCell.swift */; };
 		CFBDFF322332B70700C50B4E /* CityVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFBDFF312332B70700C50B4E /* CityVC.swift */; };
 		CFBDFF352332B94400C50B4E /* CitiesPVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFBDFF342332B94400C50B4E /* CitiesPVC.swift */; };
-		CFBDFF382332CA9D00C50B4E /* CityInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFBDFF372332CA9D00C50B4E /* CityInfo.swift */; };
-		CFBDFF3C2333A22500C50B4E /* WeatherItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFBDFF3B2333A22500C50B4E /* WeatherItems.swift */; };
 		CFBDFF3E233500ED00C50B4E /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFBDFF3D233500ED00C50B4E /* NetworkManager.swift */; };
 		CFC77AF8236CD64D00B17B85 /* SearchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFC77AF7236CD64D00B17B85 /* SearchManager.swift */; };
 		CFC77AFA236CD8E500B17B85 /* RemoteSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFC77AF9236CD8E500B17B85 /* RemoteSearch.swift */; };
@@ -41,7 +39,6 @@
 		CFCB5A632342426700E780DA /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFCB5A622342426700E780DA /* SearchTableViewCell.swift */; };
 		CFCE0C702343C32500C71581 /* city.list.min.json in Resources */ = {isa = PBXBuildFile; fileRef = CFCE0C6F2343C32500C71581 /* city.list.min.json */; };
 		CFD32D6F2341571000C24900 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFD32D6E2341571000C24900 /* SearchViewController.swift */; };
-		CFDB092D235CD46D000B5B95 /* ModelDailyWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFDB092C235CD46D000B5B95 /* ModelDailyWeather.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,8 +63,6 @@
 		CFBDFF1F23310B3600C50B4E /* CityTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityTableViewCell.swift; sourceTree = "<group>"; };
 		CFBDFF312332B70700C50B4E /* CityVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CityVC.swift; path = ../CitiesVC/CityVC.swift; sourceTree = "<group>"; };
 		CFBDFF342332B94400C50B4E /* CitiesPVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitiesPVC.swift; sourceTree = "<group>"; };
-		CFBDFF372332CA9D00C50B4E /* CityInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityInfo.swift; sourceTree = "<group>"; };
-		CFBDFF3B2333A22500C50B4E /* WeatherItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherItems.swift; sourceTree = "<group>"; };
 		CFBDFF3D233500ED00C50B4E /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		CFC77AF7236CD64D00B17B85 /* SearchManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchManager.swift; sourceTree = "<group>"; };
 		CFC77AF9236CD8E500B17B85 /* RemoteSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteSearch.swift; sourceTree = "<group>"; };
@@ -82,7 +77,6 @@
 		CFCE0C6F2343C32500C71581 /* city.list.min.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = city.list.min.json; sourceTree = "<group>"; };
 		CFCE0C9C234A00FB00C71581 /* Model 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Model 2.xcdatamodel"; sourceTree = "<group>"; };
 		CFD32D6E2341571000C24900 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
-		CFDB092C235CD46D000B5B95 /* ModelDailyWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelDailyWeather.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,7 +115,6 @@
 				CFCB5A6623426D6E00E780DA /* SearchVC */,
 				CFBDFF302332344D00C50B4E /* PageViewController */,
 				CFBDFF3A2333A20900C50B4E /* Model */,
-				CFBDFF362332CA8000C50B4E /* New Group */,
 				CFBDFF0D2330FE9A00C50B4E /* Assets.xcassets */,
 				CFCE0C6F2343C32500C71581 /* city.list.min.json */,
 				CFBDFF062330FE9900C50B4E /* AppDelegate.swift */,
@@ -150,16 +143,6 @@
 				CF41C561236A0E3300CA4E39 /* CurrentWeatherTableViewCell.swift */,
 			);
 			path = PageViewController;
-			sourceTree = "<group>";
-		};
-		CFBDFF362332CA8000C50B4E /* New Group */ = {
-			isa = PBXGroup;
-			children = (
-				CFDB092C235CD46D000B5B95 /* ModelDailyWeather.swift */,
-				CFBDFF372332CA9D00C50B4E /* CityInfo.swift */,
-				CFBDFF3B2333A22500C50B4E /* WeatherItems.swift */,
-			);
-			path = "New Group";
 			sourceTree = "<group>";
 		};
 		CFBDFF3A2333A20900C50B4E /* Model */ = {
@@ -307,7 +290,6 @@
 				CF41C562236A0E3300CA4E39 /* CurrentWeatherTableViewCell.swift in Sources */,
 				CFA95C2C233FF9F5001E4299 /* PersistenceManager.swift in Sources */,
 				CF7A45DB23660F56008FD696 /* DailyWeather+CoreDataClass.swift in Sources */,
-				CFBDFF382332CA9D00C50B4E /* CityInfo.swift in Sources */,
 				CFD32D6F2341571000C24900 /* SearchViewController.swift in Sources */,
 				CFC77AF8236CD64D00B17B85 /* SearchManager.swift in Sources */,
 				CF7A45D423646380008FD696 /* DailyWeatherTableViewCell.swift in Sources */,
@@ -319,9 +301,7 @@
 				CFC77B07236F9D1700B17B85 /* City+CoreDataClass.swift in Sources */,
 				CFBDFF072330FE9900C50B4E /* AppDelegate.swift in Sources */,
 				CFA95C1D233FEEAA001E4299 /* Location+CoreDataClass.swift in Sources */,
-				CFDB092D235CD46D000B5B95 /* ModelDailyWeather.swift in Sources */,
 				CF7A45DC23660F56008FD696 /* DailyWeather+CoreDataProperties.swift in Sources */,
-				CFBDFF3C2333A22500C50B4E /* WeatherItems.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

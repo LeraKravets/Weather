@@ -18,17 +18,9 @@ class CityTableViewCell: UITableViewCell {
 
     // MARK: - Properties
 
-
-//    weak var delegate: CitiesViewController?
-
     override func awakeFromNib() {
         super.awakeFromNib()
-//        getCurrentTime()
     }
-
-//    private func getCurrentTime() {
-//        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector:#selector(self.update) , userInfo: nil, repeats: true)
-//    }
 
     // MARK: - Life Cycle
 
@@ -36,8 +28,10 @@ class CityTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
 
-    func update(currentInfo weatherItem: CurrentWeather, and cityItem: City) {
-        temperatureLabel.text = String(Int(weatherItem.currentTemp))
+    func update(cityItem: City) {
+        if let currentTemp = cityItem.currentWeather?.currentTemp {
+            temperatureLabel.text = String(Int(currentTemp))
+        }
         cityNameLabel.text = cityItem.cityName
         guard let backgroundImage = cityItem.weatherIcon else { return }
         switch backgroundImage {

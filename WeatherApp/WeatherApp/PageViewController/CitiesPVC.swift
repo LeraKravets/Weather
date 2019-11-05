@@ -81,8 +81,6 @@ class CitiesPVC: UIPageViewController {
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-//        addObservers()
-//        fatalError("init(coder:) has not been implemented")
     }
 
     @objc func backToMenuButtonTapped(_ sender: UIButton) {
@@ -116,14 +114,6 @@ extension CitiesPVC: UIPageViewControllerDataSource, UIPageViewControllerDelegat
         return nil
     }
 
-//    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
-//        guard completed else { return }
-//        guard let currentVC = pageViewController.viewControllers?.first as? CityVC else {
-//            return
-//        }
-//        guard let cityIndex = arrayCityVC.firstIndex(of: currentVC) else { return }
-//        pageControl.currentPage = cityIndex
-//    }
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
           guard completed else { return }
           guard let currentVC = pageViewController.viewControllers?.first as? CityVC else {
@@ -132,32 +122,4 @@ extension CitiesPVC: UIPageViewControllerDataSource, UIPageViewControllerDelegat
         guard let index = arrayCityVC.firstIndex(of: currentVC) else { return }
         myPageControl.currentPage = index
       }
-
-
-
-//    func presentationCount(for pageViewController: UIPageViewController) -> Int {
-//        return cities.count
-//    }
-//    func presentationIndex(for pageViewController: UIPageViewController) -> Int {
-//        return 0
-//    }
-
-
-
-
-
-//    func pageViewController(_ pageViewController: UIPageViewController, willTransitionTo pendingViewControllers: [UIViewController]) {
-//        pendingIndex = index(ofAccessibilityElement: (pendingViewControllers.first as? CityVC))
-//    }
-//    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
-//        if completed {
-//            if let currentIndex = pendingIndex {
-//                self.pageControl.numberOfPages = currentIndex
-//
-//
-//            }
-//        }
-//    }
-
-
 }

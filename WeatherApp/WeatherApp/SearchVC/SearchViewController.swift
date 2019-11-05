@@ -45,16 +45,9 @@ class SearchViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        loudJsonData(filename: "city.list.min")
 
-        // 1
-//        searchController.searchResultsUpdater = self
-        // 2
         searchController.obscuresBackgroundDuringPresentation = false
-
-        // 4
         navigationItem.searchController = searchController
-        // 5
         definesPresentationContext = true
     }
 
@@ -70,27 +63,27 @@ class SearchViewController: UIViewController {
 
     // MARK: - Parsing local JSON file   "city.list.min"
 
-    func loudJsonData(filename fileName: String)  {
-        DispatchQueue.global().async {
-            guard let url = Bundle.main.url(forResource: fileName, withExtension: "json") else { fatalError() }
-            do {
-                let jsonData = try Data(contentsOf: url)
-                guard
-                    let json = try JSONSerialization.jsonObject(with: jsonData) as? [[String: Any]]
-                else { return }
-
-                DispatchQueue.main.async {
-                    self.citiesInfo = json
-                    self.citiesNameArr = self.citiesInfo?.compactMap({ $0["name"] }) as? [String] ?? []
-                    self.resultsTableView.reloadData()
-                }
-
-            } catch {
-                print(error)
-            }
-
-        }
-    }
+//    func loudJsonData(filename fileName: String)  {
+//        DispatchQueue.global().async {
+//            guard let url = Bundle.main.url(forResource: fileName, withExtension: "json") else { fatalError() }
+//            do {
+//                let jsonData = try Data(contentsOf: url)
+//                guard
+//                    let json = try JSONSerialization.jsonObject(with: jsonData) as? [[String: Any]]
+//                else { return }
+//
+//                DispatchQueue.main.async {
+//                    self.citiesInfo = json
+//                    self.citiesNameArr = self.citiesInfo?.compactMap({ $0["name"] }) as? [String] ?? []
+//                    self.resultsTableView.reloadData()
+//                }
+//
+//            } catch {
+//                print(error)
+//            }
+//
+//        }
+//    }
 
 //    func loudJsonData(complitionHandler: @escaping ([[String: Any]]?) -> Void) {
 //        guard let url = Bundle.main.url(forResource: "city.list.min", withExtension: "json") else { fatalError() }

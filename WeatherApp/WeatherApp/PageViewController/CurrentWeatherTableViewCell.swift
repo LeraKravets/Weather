@@ -15,10 +15,6 @@ class CurrentWeatherTableViewCell: UITableViewCell {
     @IBOutlet weak var infoLabel1: UILabel!
     @IBOutlet weak var infoLabel2: UILabel!
 
-//    private enum RowType: Int, CaseIterable {
-//        case sunriseSunset, pressureHumidity, windVisibility
-//    }
-
     override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -56,29 +52,6 @@ class CurrentWeatherTableViewCell: UITableViewCell {
                 }
               default:
                   return
-
-//        let rowType = RowType(rawValue: index)
-//        switch rowType {
-//        case .sunriseSunset:
-//            descriptionLable1.text = "SUNRISE"
-//            descriptionLable2.text = "SUNSET"
-//        case .pressureHumidity:
-//            descriptionLable1.text = "PRESSURE"
-//            descriptionLable2.text = "HUMIDITY"
-//        case .windVisibility:
-//            descriptionLable1.text = "WIND"
-//            descriptionLable2.text = "VISIBILITY"
-//        default:
-//            return
         }
-
-//        if let iconName = dailyWeatherInfo.dailyIcon {
-//            weatherIconImageView.image = UIImage(named: iconName)
-//        }
-//        print(dailyWeatherInfo.dailyIcon)
-//        maxTempLabel.text = String(dailyWeatherInfo.tempMax)
-//        minTempLabel.text = String(dailyWeatherInfo.tempMin)
-//        weekDayLabel.text = getDateFromStamp(Int(dailyWeatherInfo.date))
     }
-
 }
