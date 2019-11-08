@@ -11,7 +11,7 @@ import Foundation
 class NetworkManager {
 
     static let shared = NetworkManager()
-    private var dataTask: URLSessionDataTask?
+//    private var dataTask: URLSessionDataTask?
 
     private init() {}
 
@@ -23,16 +23,18 @@ class NetworkManager {
         guard let resourceURL1 = URL(string: resourceString1) else { fatalError() }
         guard let resourceURL2 = URL(string: resourceString2) else { fatalError() }
 
-        dataTask?.cancel()
-        dataTask = nil
+//        dataTask?.cancel()
+//        dataTask = nil
 
-        dataTask = URLSession.shared.dataTask(with: resourceURL1) { (data, _, error) in
+        let dataTask1 = URLSession.shared.dataTask(with: resourceURL1) { [weak self] (data, _, error) in
+            guard let self = self else { return }
             guard let jsonData = data, error == nil else { return }
             do {
                 guard let json1 = try JSONSerialization.jsonObject(with: jsonData, options: .mutableContainers)
                     as? [String: Any] else { return }
                 print(json1)
-                self.dataTask = URLSession.shared.dataTask(with: resourceURL2) { (data, _, error) in
+                let dataTask2 = URLSession.shared.dataTask(with: resourceURL2) { [weak self] (data, _, error) in
+                    guard self != nil else { return }
                     guard let jsonData = data, error == nil else { return }
                     do {
                         guard let json2 = try JSONSerialization.jsonObject(with: jsonData, options: .mutableContainers)
@@ -43,11 +45,11 @@ class NetworkManager {
                         print(error)
                     }
                 }
-                self.dataTask?.resume()
+                dataTask2.resume()
             } catch {
                 print(error)
             }
         }
-        dataTask?.resume()
+        dataTask1.resume()
     }
 }
