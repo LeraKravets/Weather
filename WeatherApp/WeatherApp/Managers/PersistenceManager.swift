@@ -103,9 +103,9 @@ class PersistenceManager {
         city?.currentWeather?.currentIcon = currentWeatherIcon
         city?.currentWeather?.summary = summary
         if let currentTemp = currentTemp, let tempMin = tempMin, let tempMax = tempMax, let humidity = humidity, let pressure = pressure, let visibility = visibility, let windSpeed = windSpeed, let sunset = sunset, let sunrise = sunrise {
-            city?.currentWeather?.currentTemp = round(currentTemp - 273.15)
-            city?.currentWeather?.tempMin = round(tempMin - 273.15)
-            city?.currentWeather?.tempMax = round(tempMax - 273.15)
+            city?.currentWeather?.currentTemp = currentTemp.convertToCelsiusAndRound()
+            city?.currentWeather?.tempMin = tempMin.convertToCelsiusAndRound()
+            city?.currentWeather?.tempMax = tempMax.convertToCelsiusAndRound()
             city?.currentWeather?.humidity = round(humidity)
             city?.currentWeather?.pressure = round(pressure)
             city?.currentWeather?.visibility = (visibility / 1000).roundToDecimal(1)
