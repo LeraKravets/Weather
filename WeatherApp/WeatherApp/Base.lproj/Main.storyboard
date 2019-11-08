@@ -51,7 +51,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="vr7-cl-h8b">
-                                <rect key="frame" x="5" y="399.5" width="404" height="441.5"/>
+                                <rect key="frame" x="5" y="369.5" width="404" height="441.5"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="DailyWeather" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="DailyWeatherCellID" rowHeight="40" id="8bU-oc-bRK" customClass="DailyWeatherTableViewCell" customModule="WeatherApp" customModuleProvider="target">
@@ -182,7 +182,7 @@
                                 </prototypes>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OzF-ud-7Kb">
-                                <rect key="frame" x="0.0" y="841" width="414" height="1"/>
+                                <rect key="frame" x="0.0" y="811" width="414" height="1"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="2tw-b4-o80"/>
@@ -198,10 +198,10 @@
                             <constraint firstItem="OzF-ud-7Kb" firstAttribute="top" secondItem="vr7-cl-h8b" secondAttribute="bottom" id="PE2-ro-Gf5"/>
                             <constraint firstItem="tm5-z1-cFE" firstAttribute="trailing" secondItem="vr7-cl-h8b" secondAttribute="trailing" constant="5" id="WfJ-nh-Y9Y"/>
                             <constraint firstItem="OzF-ud-7Kb" firstAttribute="leading" secondItem="tm5-z1-cFE" secondAttribute="leading" id="Yu5-I3-6Ui"/>
+                            <constraint firstItem="tm5-z1-cFE" firstAttribute="bottom" secondItem="OzF-ud-7Kb" secondAttribute="bottom" constant="50" id="YwR-mQ-MRh"/>
                             <constraint firstItem="h3n-2w-Glu" firstAttribute="trailing" secondItem="tm5-z1-cFE" secondAttribute="trailing" id="bX0-Eo-dmE"/>
                             <constraint firstItem="OzF-ud-7Kb" firstAttribute="trailing" secondItem="tm5-z1-cFE" secondAttribute="trailing" id="dtm-kn-lnp"/>
-                            <constraint firstItem="vr7-cl-h8b" firstAttribute="top" secondItem="KUG-TH-ViS" secondAttribute="bottom" constant="110" id="glu-AE-E43"/>
-                            <constraint firstItem="tm5-z1-cFE" firstAttribute="bottom" secondItem="OzF-ud-7Kb" secondAttribute="bottom" constant="20" id="iG9-o6-u5u"/>
+                            <constraint firstItem="vr7-cl-h8b" firstAttribute="top" secondItem="KUG-TH-ViS" secondAttribute="bottom" constant="80" id="glu-AE-E43"/>
                             <constraint firstAttribute="bottom" secondItem="h3n-2w-Glu" secondAttribute="bottom" id="mRa-cz-F0S"/>
                             <constraint firstItem="h3n-2w-Glu" firstAttribute="leading" secondItem="tm5-z1-cFE" secondAttribute="leading" id="n0d-At-4cq"/>
                             <constraint firstItem="Weq-Zw-Kym" firstAttribute="centerX" secondItem="MOa-Fg-nb8" secondAttribute="centerX" id="nMx-PR-jRu"/>

@@ -13,9 +13,8 @@ class CitiesPVC: UIPageViewController {
     var cities = [City]()
     var initialIndex: Int?
 
-    lazy var myPageControl: UIPageControl = {
+    lazy var citiesNumberPageControl: UIPageControl = {
         let pageControl = UIPageControl()
-        pageControl.frame = CGRect(x: 0, y: view.frame.maxY - 60, width: UIScreen.main.bounds.width, height: 50)
         guard arrayCityVC.count != 1 else { return pageControl }
         pageControl.numberOfPages = cities.count
         if let pageControlIndex = initialIndex {
@@ -27,8 +26,10 @@ class CitiesPVC: UIPageViewController {
         return pageControl
     }()
 
-    lazy var backToMenu: UIButton = {
-        let button = UIButton(frame: CGRect(x: view.frame.maxX - 40, y: view.frame.maxY - 40, width: 20, height: 15))
+    lazy var menuButton: UIButton = {
+        let button = UIButton()
+//        let button = UIButton(frame: CGRect(x: view.frame.maxX - 40, y: view.frame.maxY - 40, width: 20, height: 15))
+//        button.frame = CGRect(x: view.frame.maxX - 40, y: view.frame.maxY - 40, width: 20, height: 15)
         button.backgroundColor = UIColor.clear
         button.setImage(UIImage(named: "menu"), for: .normal)
         button.addTarget(self, action: #selector(backToMenuButtonTapped), for: .touchUpInside)
@@ -42,8 +43,8 @@ class CitiesPVC: UIPageViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.view.addSubview(myPageControl)
-        self.view.addSubview(backToMenu)
+        self.view.addSubview(citiesNumberPageControl)
+        self.view.addSubview(menuButton)
 
         self.dataSource = self
         self.delegate = self
@@ -54,11 +55,20 @@ class CitiesPVC: UIPageViewController {
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        for view in self.view.subviews {
-            if view is UIPageControl {
-                view.backgroundColor = UIColor.clear
-            }
-        }
+        citiesNumberPageControl.translatesAutoresizingMaskIntoConstraints = false
+        let guide = view.safeAreaLayoutGuide
+        citiesNumberPageControl.bottomAnchor.constraint(equalTo: guide.bottomAnchor, constant: -15).isActive = true
+        citiesNumberPageControl.centerXAnchor.constraint(equalTo: guide.centerXAnchor).isActive = true
+//        citiesPageControl.center = CGPoint(x: view.center.x, y: view.frame.maxY - 60)
+
+//        button.frame = CGRect(x: view.frame.maxX - 40, y: view.frame.maxY - 40, width: 20, height: 15)
+        menuButton.translatesAutoresizingMaskIntoConstraints = false
+        menuButton.bottomAnchor.constraint(equalTo: guide.bottomAnchor, constant: -25).isActive = true
+        menuButton.rightAnchor.constraint(equalTo: guide.rightAnchor, constant: -15).isActive = true
+        menuButton.heightAnchor.constraint(equalToConstant: 15).isActive = true
+        menuButton.widthAnchor.constraint(equalToConstant: 20).isActive = true
+
+
     }
 
 	// MARK: - Create VC
@@ -120,6 +130,6 @@ extension CitiesPVC: UIPageViewControllerDataSource, UIPageViewControllerDelegat
               return
           }
         guard let index = arrayCityVC.firstIndex(of: currentVC) else { return }
-        myPageControl.currentPage = index
+        citiesNumberPageControl.currentPage = index
       }
 }
