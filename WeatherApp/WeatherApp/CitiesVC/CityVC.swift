@@ -22,7 +22,6 @@ class CityVC: UIViewController {
 
     var city: City?
     var setOfDailyWeather: Set<DailyWeather>?
-    var arrayOfDailyWeather: [DailyWeather]?
 
     private enum Section: Int, CaseIterable {
         case dailyWeather, currentWeather
@@ -33,6 +32,7 @@ class CityVC: UIViewController {
 
 
     override func viewDidLoad() {
+        setOfDailyWeather = city?.dailyWeathert as? Set<DailyWeather>
         super.viewDidLoad()
 
         dailyWeatherTableView.delegate = self
@@ -61,9 +61,8 @@ class CityVC: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setOfDailyWeather = city?.dailyWeathert as? Set<DailyWeather>
-        arrayOfDailyWeather = setOfDailyWeather?.sorted(by: { $0.date < $1.date })
-
+//        setOfDailyWeather = city?.dailyWeathert as? Set<DailyWeather>
+//        arrayOfDailyWeather = setOfDailyWeather?.sorted(by: { $0.date < $1.date })
     }
 }
 
@@ -108,9 +107,8 @@ extension CityVC: UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: dailyWeatherCellId, for: indexPath) as? DailyWeatherTableViewCell else {
                 fatalError("Can't find cell with id: \(dailyWeatherCellId)")
             }
-            if let arrayOfDailyWeather = arrayOfDailyWeather {
+            if let arrayOfDailyWeather = setOfDailyWeather?.sorted(by: { $0.date < $1.date }) {
                 cell.updateDailyWeather(dailyWeatherInfo: arrayOfDailyWeather[indexPath.row])
-//                cell.updateDailyWeather(withIndex: indexPath.row)
             }
             return cell
         case .currentWeather:

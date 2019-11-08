@@ -28,8 +28,6 @@ class CitiesPVC: UIPageViewController {
 
     lazy var menuButton: UIButton = {
         let button = UIButton()
-//        let button = UIButton(frame: CGRect(x: view.frame.maxX - 40, y: view.frame.maxY - 40, width: 20, height: 15))
-//        button.frame = CGRect(x: view.frame.maxX - 40, y: view.frame.maxY - 40, width: 20, height: 15)
         button.backgroundColor = UIColor.clear
         button.setImage(UIImage(named: "menu"), for: .normal)
         button.addTarget(self, action: #selector(backToMenuButtonTapped), for: .touchUpInside)
@@ -55,13 +53,11 @@ class CitiesPVC: UIPageViewController {
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        citiesNumberPageControl.translatesAutoresizingMaskIntoConstraints = false
         let guide = view.safeAreaLayoutGuide
+        citiesNumberPageControl.translatesAutoresizingMaskIntoConstraints = false
         citiesNumberPageControl.bottomAnchor.constraint(equalTo: guide.bottomAnchor, constant: -15).isActive = true
         citiesNumberPageControl.centerXAnchor.constraint(equalTo: guide.centerXAnchor).isActive = true
-//        citiesPageControl.center = CGPoint(x: view.center.x, y: view.frame.maxY - 60)
 
-//        button.frame = CGRect(x: view.frame.maxX - 40, y: view.frame.maxY - 40, width: 20, height: 15)
         menuButton.translatesAutoresizingMaskIntoConstraints = false
         menuButton.bottomAnchor.constraint(equalTo: guide.bottomAnchor, constant: -25).isActive = true
         menuButton.rightAnchor.constraint(equalTo: guide.rightAnchor, constant: -15).isActive = true
