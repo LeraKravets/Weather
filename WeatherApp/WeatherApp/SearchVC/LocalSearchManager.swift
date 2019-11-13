@@ -19,21 +19,20 @@ class LocalSearchManager: SearchManager {
 
     func performSearch(text: String, completion: @escaping ([String]) -> Void) {
         searchQueue.cancelAllOperations()
-        searchQueue.addOperation { [weak self] in
-        guard let self = self else { return }
-        guard let url = Bundle.main.url(forResource: "city.list.min", withExtension: "json") else { fatalError() }
-        do {
-            let jsonData = try Data(contentsOf: url)
-            guard let json = try JSONSerialization.jsonObject(with: jsonData) as? [[String: Any]] else { return }
-            let citiesNameArr = json.compactMap({ $0["name"] }) as? [String] ?? []
-            let results = citiesNameArr.filter({ $0.starts(with: text) })
+        searchQueue.addOperation {
+            guard let url = Bundle.main.url(forResource: "city.list.min", withExtension: "json") else { fatalError() }
+            do {
+                let jsonData = try Data(contentsOf: url)
+                guard let json = try JSONSerialization.jsonObject(with: jsonData) as? [[String: Any]] else { return }
+                let citiesNameArr = json.compactMap({ $0["name"] }) as? [String] ?? []
+                let results = citiesNameArr.filter({ $0.starts(with: text) })
 
-            DispatchQueue.main.async {
-                completion(results)
+                DispatchQueue.main.async {
+                    completion(results)
+                }
+            } catch {
+                print(error)
             }
-        } catch {
-            print(error)
-        }
 
         }
     }

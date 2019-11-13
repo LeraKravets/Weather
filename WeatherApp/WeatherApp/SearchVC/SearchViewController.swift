@@ -23,7 +23,7 @@ class SearchViewController: UIViewController {
 
     // MARK: - Properties
 
-    private var searchMamager: SearchManager { return SearchNamagers.chooseSearchManager() }
+    private var searchMamager: SearchManager { SearchNamagers.chooseSearchManager() }
     private var searchResults: [String] = []
 
     let cellID = "resultsCellId"
@@ -53,9 +53,9 @@ class SearchViewController: UIViewController {
 
     func doSearch(_ text: String?) {
         guard let text = text else { return }
-        searchMamager.performSearch(text: text) { results in
-            self.searchResults = results
-            self.resultsTableView.reloadData()
+        searchMamager.performSearch(text: text) { [weak self] results in
+            self?.searchResults = results
+            self?.resultsTableView.reloadData()
             
         }
         

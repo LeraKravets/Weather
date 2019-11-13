@@ -16,20 +16,17 @@ class PersistenceManager {
     private init() {}
 
     func saveWeatherInfo(currentInfo: [String: Any], dailyInfo: [String: Any]) {
-        let locationInfo = currentInfo["coord"] as? [String: Any]
-        let latitude = locationInfo?["lat"] as? Double
-        let longitude = locationInfo?["lon"] as? Double
+        guard
+            let cityId = currentInfo["id"] as? Int64,
+            let dailyWeatherInfo = dailyInfo["data"] as? [[String: Any]]
+        else { return }
 
         let countryInfo = currentInfo["sys"] as? [String: Any]
-        let countryId = countryInfo?["id"] as? Int16
         let countryName = countryInfo?["country"] as? String
         let sunrise = countryInfo?["sunrise"] as? Int64
         let sunset = countryInfo?["sunset"] as? Int64
-        
 
-        guard let cityId = currentInfo["id"] as? Int64 else { return }
         let cityName = currentInfo["name"] as? String
-        let cityTime = currentInfo["dt"] as? Int
         let cityTimeZone = currentInfo["timezone"] as? Int64
 
         let currentWeatherInfo = currentInfo["weather"] as? [[String: Any]]
@@ -46,10 +43,6 @@ class PersistenceManager {
         let visibility = currentInfo["visibility"] as? Double
         let wind = currentInfo["wind"] as? [String: Any]
         let windSpeed = wind?["speed"] as? Double
-
-
-
-        guard let dailyWeatherInfo = dailyInfo["data"] as? [[String: Any]] else { return }
 
 //        Saving/updating City Entity
 
@@ -73,14 +66,14 @@ class PersistenceManager {
             city?.timezone = cityTimeZone
         }
 
-//        Saving/updating Country Entity
+		// Saving/updating Country Entity
 
         if city?.country == nil {
             city?.country = NSEntityDescription.insertNewObject(forEntityName: "Country",
                                                                 into: context) as? Country
         }
         city?.country?.countryName = countryName
-        if let countryId = countryId {
+        if let countryId = countryInfo?["id"] as? Int16 {
             city?.country?.countryId = countryId
         }
 
@@ -90,7 +83,11 @@ class PersistenceManager {
             city?.location = NSEntityDescription.insertNewObject(forEntityName: "Location",
                                                                into: context) as? Location
         }
-        if let latitude = latitude, let longitude = longitude {
+
+        if let locationInfo = currentInfo["coord"] as? [String: Any],
+            let latitude = locationInfo["lat"] as? Double,
+            let longitude = locationInfo["lon"] as? Double {
+
             city?.location?.latitude = latitude
             city?.location?.longitude = longitude
         }

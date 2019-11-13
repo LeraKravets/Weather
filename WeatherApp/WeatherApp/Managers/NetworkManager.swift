@@ -8,48 +8,65 @@
 
 import Foundation
 
+typealias CurrentWheather = [String: Any]
+typealias DailyWheather = [String: Any]
+typealias Completion = (CurrentWeather?, DailyWeather?) -> Void
+
 class NetworkManager {
 
     static let shared = NetworkManager()
-//    private var dataTask: URLSessionDataTask?
 
     private init() {}
 
-    func downloadWeatherData(targetCity: String, completionHandler: @escaping ([String: Any]?, [String: Any]?) -> Void) {
-        let formattedtargetCity = targetCity.replacingOccurrences(of: " ", with: "%20")
-        let resourceString1 =  "https://api.openweathermap.org/data/2.5/weather?q=\(formattedtargetCity)&APPID=5fd0c255bfc224e83c8160bb7241d760"
-        let resourceString2 =  "https://api.weatherbit.io/v2.0/forecast/daily?city=\(formattedtargetCity)&key=b883a022667c489090772840866e0102&days=7"
+    func downloadWeatherData(targetCity: String, completionHandler: @escaping Completion) {
+        let formattedtargetCity = targetCity.encodedCityName
+        let resourceString =  "https://api.openweathermap.org/data/2.5/weather?q=\(formattedtargetCity)&APPID=5fd0c255bfc224e83c8160bb7241d760"
 
-        guard let resourceURL1 = URL(string: resourceString1) else { fatalError() }
-        guard let resourceURL2 = URL(string: resourceString2) else { fatalError() }
+        guard let resourceURL = URL(string: resourceString) else {
+			completionHandler(nil, nil)
+            return
+        }
 
-//        dataTask?.cancel()
-//        dataTask = nil
-
-        let dataTask1 = URLSession.shared.dataTask(with: resourceURL1) { [weak self] (data, _, error) in
-            guard let self = self else { return }
-            guard let jsonData = data, error == nil else { return }
+        let dataTask = URLSession.shared.dataTask(with: resourceURL) { [weak self] (data, _, error) in
+            guard let self = self, let jsonData = data, error == nil else { return }
             do {
-                guard let json1 = try JSONSerialization.jsonObject(with: jsonData, options: .mutableContainers)
-                    as? [String: Any] else { return }
-                print(json1)
-                let dataTask2 = URLSession.shared.dataTask(with: resourceURL2) { [weak self] (data, _, error) in
-                    guard self != nil else { return }
-                    guard let jsonData = data, error == nil else { return }
-                    do {
-                        guard let json2 = try JSONSerialization.jsonObject(with: jsonData, options: .mutableContainers)
-                            as? [String: Any] else { return }
-                        print(json2)
-                        completionHandler(json1, json2)
-                    } catch {
-                        print(error)
-                    }
-                }
-                dataTask2.resume()
+                guard let currentWeather = try JSONSerialization.jsonObject(with: jsonData, options: .mutableContainers)
+                    as? CurrentWeather else { return }
+                print(currentWeather)
+                self.loadDaily(targetCity: targetCity, currentWeather: currentWeather, completionHandler: completionHandler)
             } catch {
                 print(error)
             }
         }
-        dataTask1.resume()
+        dataTask.resume()
     }
+
+    func loadDaily(targetCity: String, currentWeather: CurrentWeather, completionHandler: @escaping Completion) {
+
+        let formattedtargetCity = targetCity.encodedCityName
+        let resourceString2 =  "https://api.weatherbit.io/v2.0/forecast/daily?city=\(formattedtargetCity)&key=b883a022667c489090772840866e0102&days=7"
+        guard let resourceURL2 = URL(string: resourceString2) else { fatalError() }
+
+        let dataTask = URLSession.shared.dataTask(with: resourceURL2) { (data, _, error) in
+            guard let jsonData = data, error == nil else { return }
+            do {
+                guard let dailyWeather = try JSONSerialization.jsonObject(with: jsonData, options: .mutableContainers)
+                    as? DailyWeather else { return }
+                print(dailyWeather)
+                completionHandler(currentWeather, dailyWeather)
+            } catch {
+                print(error)
+            }
+        }
+        dataTask.resume()
+    }
+
+}
+
+extension String {
+
+    var encodedCityName: String {
+        return replacingOccurrences(of: " ", with: "%20")
+    }
+
 }

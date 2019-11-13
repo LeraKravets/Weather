@@ -15,7 +15,7 @@ protocol SearchManager {
 class SearchNamagers {
 //    static var enthernetConnection = true
     static func chooseSearchManager() -> SearchManager {
-        if Reachability.isConnectedToNetwork() {
+        if Reachability.isConnectedToNetwork() == false {
             return RemoteSearch()
         } else {
             return LocalSearchManager()
