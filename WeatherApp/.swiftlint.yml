@@ -1,0 +1,61 @@
+excluded: 
+  - Carthage
+  - Pods
+  - Source/ExcludedFolder
+  - Source/ExcludedFile.swift
+
+included: 
+  - WeatherApp
+
+disabled_rules:
+  - colon
+  - comma
+  - control_statement
+  - void_return
+  - multiple_closures_with_trailing_closure
+  - line_length
+
+opt_in_rules:
+  - empty_count
+  - overridden_super_call
+  - private_outlet  
+  - force_unwrapping
+  - implicitly_unwrapped_optional
+  - sorted_imports
+  - private_action
+  - redundant_type_annotation
+
+large_tuple: 5
+
+identifier_name:
+  min_length: 2
+  max_length: 
+    warning: 90
+    error: 1000
+  excluded:
+    - id
+
+type_name:
+  min_length: 3
+  max_length: 
+    warning: 90
+    error: 100
+
+function_body_length:
+    warning: 90
+    error: 90
+
+cyclomatic_complexity:
+  warning: 15
+  error: 20
+
+function_parameter_count: 7
+
+type_body_length: 300
+
+file_length:
+    warning: 600
+    error: 800
+    ignore_comment_only_lines: true
+
+reporter: xcode

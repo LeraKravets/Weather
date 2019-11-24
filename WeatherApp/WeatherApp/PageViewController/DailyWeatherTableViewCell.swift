@@ -10,11 +10,11 @@ import UIKit
 
 class DailyWeatherTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var weekDayLabel: UILabel!
-    @IBOutlet weak var weatherIconImageView: UIImageView!
-    @IBOutlet weak var maxTempLabel: UILabel!
-    @IBOutlet weak var minTempLabel: UILabel!
-    
+    @IBOutlet weak fileprivate var weekDayLabel: UILabel!
+    @IBOutlet weak fileprivate var weatherIconImageView: UIImageView!
+    @IBOutlet weak fileprivate var maxTempLabel: UILabel!
+    @IBOutlet weak fileprivate var minTempLabel: UILabel!
+
     override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -31,7 +31,7 @@ class DailyWeatherTableViewCell: UITableViewCell {
         maxTempLabel.text = String(dailyWeatherInfo.tempMax)
         minTempLabel.text = String(dailyWeatherInfo.tempMin)
         if let timezone = dailyWeatherInfo.city?.timezone {
-            weekDayLabel.text = (dailyWeatherInfo.date).TimeFormatter(timeFormat: .dayOfWeek, timeZone: timezone)
+            weekDayLabel.text = (dailyWeatherInfo.date).timeFormatter(timeFormat: .dayOfWeek, timeZone: timezone)
         }
     }
 }

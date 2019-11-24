@@ -18,8 +18,8 @@ class SearchViewController: UIViewController {
 
     // MARK: - Outlets
 
-    @IBOutlet weak var searchBar: UISearchBar!
-    @IBOutlet weak var resultsTableView: UITableView!
+    @IBOutlet weak fileprivate var searchBar: UISearchBar!
+    @IBOutlet weak fileprivate var resultsTableView: UITableView!
 
     // MARK: - Properties
 
@@ -36,7 +36,6 @@ class SearchViewController: UIViewController {
     var searching = false
 
     let searchController = UISearchController(searchResultsController: nil)
-
 
     // MARK: - Life Cycle
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -56,9 +55,7 @@ class SearchViewController: UIViewController {
         searchMamager.performSearch(text: text) { [weak self] results in
             self?.searchResults = results
             self?.resultsTableView.reloadData()
-            
         }
-        
     }
 
     // MARK: - Parsing local JSON file   "city.list.min"
@@ -149,7 +146,6 @@ extension SearchViewController: UISearchBarDelegate {
         doSearch(searchText)
 //        searchCity = searchResults.filter({ $0.prefix(searchText.count) == searchText })
 //        resultsTableView.reloadData()
-        
 //        searchCity = citiesNameArr.filter({ $0.prefix(searchText.count) == searchText })
 //        searching = true
 //        resultsTableView.reloadData()

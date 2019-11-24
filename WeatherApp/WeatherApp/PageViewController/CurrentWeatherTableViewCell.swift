@@ -10,10 +10,10 @@ import UIKit
 
 class CurrentWeatherTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var descriptionLable1: UILabel!
-    @IBOutlet weak var descriptionLable2: UILabel!
-    @IBOutlet weak var infoLabel1: UILabel!
-    @IBOutlet weak var infoLabel2: UILabel!
+    @IBOutlet weak fileprivate var descriptionLable1: UILabel!
+    @IBOutlet weak fileprivate var descriptionLable2: UILabel!
+    @IBOutlet weak fileprivate var infoLabel1: UILabel!
+    @IBOutlet weak fileprivate var infoLabel2: UILabel!
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -29,9 +29,9 @@ class CurrentWeatherTableViewCell: UITableViewCell {
               case .sunriseSunset:
                   descriptionLable1.text = "SUNRISE"
                   let timeZone = city.timezone
-                  infoLabel1.text = city.currentWeather?.sunrise.TimeFormatter(timeFormat: .hourMinutes, timeZone: timeZone)
+                  infoLabel1.text = city.currentWeather?.sunrise.timeFormatter(timeFormat: .hourMinutes, timeZone: timeZone)
                   descriptionLable2.text = "SUNSET"
-                  infoLabel2.text = city.currentWeather?.sunset.TimeFormatter(timeFormat: .hourMinutes, timeZone: timeZone)
+                  infoLabel2.text = city.currentWeather?.sunset.timeFormatter(timeFormat: .hourMinutes, timeZone: timeZone)
               case .pressureHumidity:
                   descriptionLable1.text = "PRESSURE"
                   if let pressure = city.currentWeather?.pressure {

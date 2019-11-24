@@ -13,7 +13,7 @@ extension Int64 {
         case hourMinutes, dayOfWeek
     }
 
-    func TimeFormatter(timeFormat: TimeFormat, timeZone: Int64) -> String {
+    func timeFormatter(timeFormat: TimeFormat, timeZone: Int64) -> String {
         let timeZoneDate = self + timeZone
         let date = NSDate(timeIntervalSince1970: TimeInterval(timeZoneDate))
         let dateFormatter = DateFormatter()

@@ -10,11 +10,11 @@ import UIKit
 
 class CityVC: UIViewController {
 
-    @IBOutlet weak var cityLabel: UILabel!
-    @IBOutlet weak var summaryLabel: UILabel!
-    @IBOutlet weak var tempLabel: UILabel!
-    @IBOutlet weak var backgroundView: UIImageView!
-    @IBOutlet weak var dailyWeatherTableView: UITableView!
+    @IBOutlet weak fileprivate var cityLabel: UILabel!
+    @IBOutlet weak fileprivate var summaryLabel: UILabel!
+    @IBOutlet weak fileprivate var tempLabel: UILabel!
+    @IBOutlet weak fileprivate var backgroundView: UIImageView!
+    @IBOutlet weak fileprivate var dailyWeatherTableView: UITableView!
 
     enum RowType: Int, CaseIterable {
         case sunriseSunset, pressureHumidity, windVisibility
@@ -29,7 +29,6 @@ class CityVC: UIViewController {
 
     let dailyWeatherCellId = "DailyWeatherCellID"
     let currentWeatherCellId = "CurrentWeatherCellID"
-
 
     override func viewDidLoad() {
         setOfDailyWeather = city?.dailyWeathert as? Set<DailyWeather>
@@ -67,7 +66,7 @@ class CityVC: UIViewController {
 }
 
 extension CityVC: UITableViewDelegate {
-    
+
     func numberOfSections(in tableView: UITableView) -> Int {
         return Section.allCases.count
     }
@@ -97,7 +96,7 @@ extension CityVC: UITableViewDataSource {
             return RowType.allCases.count
         }
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let sectionIndex = Section(rawValue: indexPath.section) else {
             fatalError("Can't find section with index: \(indexPath.section)")
@@ -120,6 +119,5 @@ extension CityVC: UITableViewDataSource {
             }
             return cell
         }
-
     }
 }

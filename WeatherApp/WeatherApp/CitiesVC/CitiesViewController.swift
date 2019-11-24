@@ -12,7 +12,7 @@ class CitiesViewController: UIViewController {
 
     // MARK: - Outlets
 
-    @IBOutlet weak var citiesTableView: UITableView!
+    @IBOutlet weak fileprivate var citiesTableView: UITableView!
 
     // MARK: - Properties
 

@@ -63,8 +63,6 @@ class CitiesPVC: UIPageViewController {
         menuButton.rightAnchor.constraint(equalTo: guide.rightAnchor, constant: -15).isActive = true
         menuButton.heightAnchor.constraint(equalToConstant: 15).isActive = true
         menuButton.widthAnchor.constraint(equalToConstant: 20).isActive = true
-
-
     }
 
 	// MARK: - Create VC

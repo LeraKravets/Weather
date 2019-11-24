@@ -12,7 +12,7 @@ class AddCityTableViewCell: UITableViewCell {
 
     // MARK: - Outlets
 
-    @IBOutlet weak var addCityButton: UIButton!
+    @IBOutlet weak fileprivate var addCityButton: UIButton!
 
     // MARK: - Properties
 
@@ -32,7 +32,7 @@ class AddCityTableViewCell: UITableViewCell {
 
     // MARK: - Actions
 
-    @IBAction func addCityButton(_ sender: Any) {
+    @IBAction fileprivate func addCityButton(_ sender: Any) {
 	addCityHandler?()
     }
 }

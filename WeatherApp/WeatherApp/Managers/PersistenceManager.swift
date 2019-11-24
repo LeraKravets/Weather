@@ -16,6 +16,7 @@ class PersistenceManager {
     private init() {}
 
     func saveWeatherInfo(currentInfo: [String: Any], dailyInfo: [String: Any]) {
+//    func saveWeatherInfo(currentInfo: CurrentWheather, dailyInfo: DailyWheather) {
         guard
             let cityId = currentInfo["id"] as? Int64,
             let dailyWeatherInfo = dailyInfo["data"] as? [[String: Any]]
@@ -113,7 +114,8 @@ class PersistenceManager {
 //        var dailyWeather: DailyWeather?
 
         for item in city?.dailyWeathert ?? [] {
-            context.delete(item as! NSManagedObject)
+            guard let item = item as? NSManagedObject else { return }
+            context.delete(item)
         }
 
         for oneDayWeather in dailyWeatherInfo {
@@ -176,7 +178,6 @@ class PersistenceManager {
         return persistantContainer.viewContext
     }
 
-
     lazy var persistantContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "Model")
         container.loadPersistentStores(completionHandler: { (_, error) in
@@ -203,10 +204,10 @@ class PersistenceManager {
 
     // MARK: - Helper methods
 
-    func getDateFromStamp(timeInterval: Int) -> String{
+    func getDateFromStamp(timeInterval: Int) -> String {
         let date = NSDate(timeIntervalSince1970: TimeInterval(timeInterval))
         let dateFormatter = DateFormatter()
-        let dateFormat = "EEEEEEEEEE, yyyy, MMM dd"  //hh:mm
+        let dateFormat = "EEEEEEEEEE, yyyy, MMM dd"
         dateFormatter.dateFormat = dateFormat
         let dateString = dateFormatter.string(from: date as Date)
         return dateString

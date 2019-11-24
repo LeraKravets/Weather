@@ -12,9 +12,9 @@ class CityTableViewCell: UITableViewCell {
 
     // MARK: - Outlets
 
-    @IBOutlet weak var cityNameLabel: UILabel!
-    @IBOutlet weak var temperatureLabel: UILabel!
-    @IBOutlet weak var backgroundImageView: UIImageView!
+    @IBOutlet weak fileprivate var cityNameLabel: UILabel!
+    @IBOutlet weak fileprivate var temperatureLabel: UILabel!
+    @IBOutlet weak fileprivate var backgroundImageView: UIImageView!
 
     // MARK: - Properties
 
