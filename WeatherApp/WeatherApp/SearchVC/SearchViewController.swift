@@ -8,8 +8,7 @@
 
 import UIKit
 
-   // MARK: - SearchViewControllerDelegate
-
+// MARK: - SearchViewControllerDelegate
 protocol SearchViewControllerDelegate: AnyObject {
     func didSelectCity(cityName: String)
 }
@@ -17,12 +16,10 @@ protocol SearchViewControllerDelegate: AnyObject {
 class SearchViewController: UIViewController {
 
     // MARK: - Outlets
-
     @IBOutlet weak fileprivate var searchBar: UISearchBar!
     @IBOutlet weak fileprivate var resultsTableView: UITableView!
 
     // MARK: - Properties
-
     private var searchMamager: SearchManager { SearchNamagers.chooseSearchManager() }
     private var searchResults: [String] = []
 
@@ -44,7 +41,6 @@ class SearchViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         searchController.obscuresBackgroundDuringPresentation = false
         navigationItem.searchController = searchController
         definesPresentationContext = true
@@ -95,8 +91,7 @@ class SearchViewController: UIViewController {
 //    }
 }
 
-    // MARK: - UITableViewDataSource
-
+// MARK: - UITableViewDataSource
 extension SearchViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -127,8 +122,7 @@ extension SearchViewController: UITableViewDataSource {
     }
 }
 
-    // MARK: - UITableViewDelegate
-
+// MARK: - UITableViewDelegate
 extension SearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.searchDelegate?.didSelectCity(cityName: searchResults[indexPath.row])
@@ -141,6 +135,7 @@ extension SearchViewController: UITableViewDelegate {
     }
 }
 
+// MARK: - UISearchBarDelegate
 extension SearchViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         doSearch(searchText)
@@ -157,6 +152,5 @@ extension SearchViewController: UISearchBarDelegate {
 
 //extension SearchViewController: UISearchResultsUpdating {
 //  func updateSearchResults(for searchController: UISearchController) {
-//    // TODO
 //  }
 //}

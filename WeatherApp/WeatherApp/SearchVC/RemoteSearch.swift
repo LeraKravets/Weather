@@ -19,7 +19,7 @@ class RemoteSearch: SearchManager {
         currentDataTask?.cancel()
         currentDataTask = nil
 
-        currentDataTask = URLSession.shared.dataTask(with: url) { (data, response, error) in
+        currentDataTask = URLSession.shared.dataTask(with: url) { (data, _, error) in
             func performCompletion(_ data: [String]) {
                 DispatchQueue.main.async {
                     completion(data)

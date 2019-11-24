@@ -7,10 +7,8 @@
 //
 //
 
-import Foundation
 import CoreData
+import Foundation
 
 @objc(CurrentWeather)
-public class CurrentWeather: NSManagedObject {
-
-}
+public class CurrentWeather: NSManagedObject {}

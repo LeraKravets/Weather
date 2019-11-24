@@ -7,10 +7,8 @@
 //
 //
 
-import Foundation
 import CoreData
+import Foundation
 
 @objc(City)
-public class City: NSManagedObject {
-
-}
+public class City: NSManagedObject {}

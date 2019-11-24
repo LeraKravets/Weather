@@ -7,10 +7,8 @@
 //
 //
 
-import Foundation
 import CoreData
+import Foundation
 
 @objc(Country)
-public class Country: NSManagedObject {
-
-}
+public class Country: NSManagedObject {}

@@ -10,11 +10,13 @@ import UIKit
 
 class DailyWeatherTableViewCell: UITableViewCell {
 
+    // MARK: - Outlets
     @IBOutlet weak fileprivate var weekDayLabel: UILabel!
     @IBOutlet weak fileprivate var weatherIconImageView: UIImageView!
     @IBOutlet weak fileprivate var maxTempLabel: UILabel!
     @IBOutlet weak fileprivate var minTempLabel: UILabel!
 
+    // MARK: - Life Cycle
     override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -27,7 +29,7 @@ class DailyWeatherTableViewCell: UITableViewCell {
         if let iconName = dailyWeatherInfo.dailyIcon {
             weatherIconImageView.image = UIImage(named: iconName)
         }
-        print(dailyWeatherInfo.dailyIcon)
+        print(dailyWeatherInfo.dailyIcon as Any)
         maxTempLabel.text = String(dailyWeatherInfo.tempMax)
         minTempLabel.text = String(dailyWeatherInfo.tempMin)
         if let timezone = dailyWeatherInfo.city?.timezone {

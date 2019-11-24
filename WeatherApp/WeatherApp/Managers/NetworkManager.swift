@@ -68,9 +68,7 @@ class NetworkManager {
 }
 
 extension String {
-
     var encodedCityName: String {
         return replacingOccurrences(of: " ", with: "%20")
     }
-
 }

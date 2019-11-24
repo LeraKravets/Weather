@@ -11,11 +11,9 @@ import UIKit
 class CitiesViewController: UIViewController {
 
     // MARK: - Outlets
-
     @IBOutlet weak fileprivate var citiesTableView: UITableView!
 
     // MARK: - Properties
-
     var cityInfo: [City] = PersistenceManager.shared.fetchCityInfo()
 
     private let cityCellID = "CityCellID"
@@ -47,7 +45,6 @@ class CitiesViewController: UIViewController {
     }
 
     // MARK: - Helper Methods
-
     func loadWeatherData(cityName: String) {
         NetworkManager.shared.downloadWeatherData(targetCity: cityName) { [weak self] (currentWeather, dailyWeather) in
             guard let self = self, let currentWeather = currentWeather, let dailyWeather = dailyWeather else { return }
@@ -77,8 +74,8 @@ class CitiesViewController: UIViewController {
     }
 }
 
+// MARK: - UITableViewDataSource
 extension CitiesViewController: UITableViewDataSource {
-
     func numberOfSections(in tableView: UITableView) -> Int {
         return Sections.allCases.count
     }
@@ -119,10 +116,8 @@ extension CitiesViewController: UITableViewDataSource {
 	}
 }
 
-	// MARK: - UITableViewDelegate
-
+// MARK: - UITableViewDelegate
 extension CitiesViewController: UITableViewDelegate {
-
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.row == 0 {
             return 124.0
@@ -169,8 +164,8 @@ extension CitiesViewController: UITableViewDelegate {
     }
 }
 
+// MARK: - SearchViewControllerDelegate
 extension CitiesViewController: SearchViewControllerDelegate {
-
     func didSelectCity(cityName: String) {
         self.loadWeatherData(cityName: cityName)
     }

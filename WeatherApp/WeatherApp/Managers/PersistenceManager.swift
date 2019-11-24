@@ -6,8 +6,8 @@
 //  Copyright © 2019 com.vkravets. All rights reserved.
 //
 
-import Foundation
 import CoreData
+import Foundation
 
 class PersistenceManager {
 
@@ -135,7 +135,7 @@ class PersistenceManager {
                 city?.addToDailyWeathert(dailyWeather)
             }
         }
-        print(city?.dailyWeathert)
+        print(city?.dailyWeathert as Any)
 
         saveContext()
     }

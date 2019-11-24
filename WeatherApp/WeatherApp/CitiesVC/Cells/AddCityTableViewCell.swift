@@ -11,17 +11,14 @@ import UIKit
 class AddCityTableViewCell: UITableViewCell {
 
     // MARK: - Outlets
-
     @IBOutlet weak fileprivate var addCityButton: UIButton!
 
     // MARK: - Properties
-
     weak var delegate: CitiesViewController?
 
     var addCityHandler: (() -> Void)?
 
     // MARK: - Life Cycle
-
     override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -31,7 +28,6 @@ class AddCityTableViewCell: UITableViewCell {
     }
 
     // MARK: - Actions
-
     @IBAction fileprivate func addCityButton(_ sender: Any) {
 	addCityHandler?()
     }

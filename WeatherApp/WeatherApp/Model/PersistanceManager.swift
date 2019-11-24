@@ -6,8 +6,8 @@
 //  Copyright © 2019 com.vkravets. All rights reserved.
 //
 
-import Foundation
 import CoreData
+import Foundation
 
 class PersistenceManager {
 

@@ -7,10 +7,8 @@
 //
 //
 
-import Foundation
 import CoreData
+import Foundation
 
 @objc(Location)
-public class Location: NSManagedObject {
-
-}
+public class Location: NSManagedObject {}

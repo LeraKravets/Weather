@@ -11,19 +11,16 @@ import UIKit
 class CityTableViewCell: UITableViewCell {
 
     // MARK: - Outlets
-
     @IBOutlet weak fileprivate var cityNameLabel: UILabel!
     @IBOutlet weak fileprivate var temperatureLabel: UILabel!
     @IBOutlet weak fileprivate var backgroundImageView: UIImageView!
 
     // MARK: - Properties
-
     override func awakeFromNib() {
         super.awakeFromNib()
     }
 
     // MARK: - Life Cycle
-
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
@@ -47,7 +44,4 @@ class CityTableViewCell: UITableViewCell {
             backgroundImageView.image = UIImage(named: backgroundImage)
         }
     }
-
-    // MARK: - Actions
-
 }

@@ -10,6 +10,7 @@ import UIKit
 
 class CitiesPVC: UIPageViewController {
 
+    // MARK: - Properties
     var cities = [City]()
     var initialIndex: Int?
 
@@ -38,6 +39,7 @@ class CitiesPVC: UIPageViewController {
           return .lightContent
       }
 
+    // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -92,6 +94,7 @@ class CitiesPVC: UIPageViewController {
      }
 }
 
+// MARK: - UIPageViewControllerDataSource, UIPageViewControllerDelegate
 extension CitiesPVC: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         guard arrayCityVC.count != 1 else { return nil }

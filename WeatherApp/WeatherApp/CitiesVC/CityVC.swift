@@ -10,6 +10,7 @@ import UIKit
 
 class CityVC: UIViewController {
 
+    // MARK: - Outlets
     @IBOutlet weak fileprivate var cityLabel: UILabel!
     @IBOutlet weak fileprivate var summaryLabel: UILabel!
     @IBOutlet weak fileprivate var tempLabel: UILabel!
@@ -20,6 +21,7 @@ class CityVC: UIViewController {
         case sunriseSunset, pressureHumidity, windVisibility
     }
 
+    // MARK: - Properties
     var city: City?
     var setOfDailyWeather: Set<DailyWeather>?
 
@@ -30,6 +32,7 @@ class CityVC: UIViewController {
     let dailyWeatherCellId = "DailyWeatherCellID"
     let currentWeatherCellId = "CurrentWeatherCellID"
 
+    // MARK: - Life Cycle
     override func viewDidLoad() {
         setOfDailyWeather = city?.dailyWeathert as? Set<DailyWeather>
         super.viewDidLoad()
@@ -65,6 +68,7 @@ class CityVC: UIViewController {
     }
 }
 
+// MARK: - UITableViewDelegate
 extension CityVC: UITableViewDelegate {
 
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -84,6 +88,7 @@ extension CityVC: UITableViewDelegate {
     }
 }
 
+// MARK: - UITableViewDataSource
 extension CityVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let sectionItem = Section(rawValue: section) else {
