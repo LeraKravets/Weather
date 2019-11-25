@@ -10,11 +10,13 @@ import UIKit
 
 class CurrentWeatherTableViewCell: UITableViewCell {
 
+    // MARK: - Outlets
     @IBOutlet weak fileprivate var descriptionLable1: UILabel!
     @IBOutlet weak fileprivate var descriptionLable2: UILabel!
     @IBOutlet weak fileprivate var infoLabel1: UILabel!
     @IBOutlet weak fileprivate var infoLabel2: UILabel!
 
+    // MARK: - Life Cycle
     override func awakeFromNib() {
         super.awakeFromNib()
     }

@@ -20,7 +20,6 @@ extension Int64 {
         switch timeFormat {
         case .hourMinutes:
             dateFormatter.dateFormat = "hh:mm"
-            //let dateFormat = "EEEEEEEEEE, yyyy, MMM dd"
             let dateString = dateFormatter.string(from: date as Date)
             return dateString
         case .dayOfWeek:

@@ -33,7 +33,6 @@ class LocalSearchManager: SearchManager {
             } catch {
                 print(error)
             }
-
         }
     }
 }

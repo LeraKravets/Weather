@@ -15,6 +15,7 @@ class PersistenceManager {
 
     private init() {}
 
+    //MARK: - saveWeatherInfo method
     func saveWeatherInfo(currentInfo: [String: Any], dailyInfo: [String: Any]) {
 //    func saveWeatherInfo(currentInfo: CurrentWheather, dailyInfo: DailyWheather) {
         guard
@@ -45,8 +46,6 @@ class PersistenceManager {
         let wind = currentInfo["wind"] as? [String: Any]
         let windSpeed = wind?["speed"] as? Double
 
-//        Saving/updating City Entity
-
         var city: City?
 
 		let request = NSFetchRequest<NSFetchRequestResult>(entityName: "City")
@@ -67,8 +66,6 @@ class PersistenceManager {
             city?.timezone = cityTimeZone
         }
 
-		// Saving/updating Country Entity
-
         if city?.country == nil {
             city?.country = NSEntityDescription.insertNewObject(forEntityName: "Country",
                                                                 into: context) as? Country
@@ -77,8 +74,6 @@ class PersistenceManager {
         if let countryId = countryInfo?["id"] as? Int16 {
             city?.country?.countryId = countryId
         }
-
-//        Saving/updating Location Entity
 
         if city?.location == nil {
             city?.location = NSEntityDescription.insertNewObject(forEntityName: "Location",
@@ -92,8 +87,6 @@ class PersistenceManager {
             city?.location?.latitude = latitude
             city?.location?.longitude = longitude
         }
-
-//        Saving/updating CurrentWeather Entity
 
         if city?.currentWeather == nil {
             city?.currentWeather = NSEntityDescription.insertNewObject(forEntityName: "CurrentWeather", into: context) as? CurrentWeather
@@ -111,7 +104,6 @@ class PersistenceManager {
             city?.currentWeather?.sunset = sunset
             city?.currentWeather?.sunrise = sunrise
         }
-//        var dailyWeather: DailyWeather?
 
         for item in city?.dailyWeathert ?? [] {
             guard let item = item as? NSManagedObject else { return }
@@ -141,7 +133,6 @@ class PersistenceManager {
     }
 
     // MARK: - Core Data Fetching support
-
     func fetchCurrentWeather() -> [CurrentWeather] {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "CurrentWeather")
         do {
@@ -165,7 +156,6 @@ class PersistenceManager {
     }
 
     // MARK: - Core Data Deleting support
-
     func deleteCityInfoItem(in array: inout [City], by index: Int) {
         let item = array[index]
         context.delete(item)
@@ -173,7 +163,6 @@ class PersistenceManager {
     }
 
     // MARK: - Core Data Context
-
     var context: NSManagedObjectContext {
         return persistantContainer.viewContext
     }
@@ -189,7 +178,6 @@ class PersistenceManager {
     }()
 
     // MARK: - Core Data Saving support
-
     func saveContext() {
         let context = persistantContainer.viewContext
         if context.hasChanges {
@@ -200,16 +188,5 @@ class PersistenceManager {
                 fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
             }
         }
-    }
-
-    // MARK: - Helper methods
-
-    func getDateFromStamp(timeInterval: Int) -> String {
-        let date = NSDate(timeIntervalSince1970: TimeInterval(timeInterval))
-        let dateFormatter = DateFormatter()
-        let dateFormat = "EEEEEEEEEE, yyyy, MMM dd"
-        dateFormatter.dateFormat = dateFormat
-        let dateString = dateFormatter.string(from: date as Date)
-        return dateString
     }
 }

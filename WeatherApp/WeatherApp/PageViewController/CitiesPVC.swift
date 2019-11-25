@@ -94,8 +94,8 @@ class CitiesPVC: UIPageViewController {
      }
 }
 
-// MARK: - UIPageViewControllerDataSource, UIPageViewControllerDelegate
-extension CitiesPVC: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
+// MARK: - UIPageViewControllerDataSource
+extension CitiesPVC: UIPageViewControllerDataSource {
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         guard arrayCityVC.count != 1 else { return nil }
         guard let currentVC = viewController as? CityVC else { return nil }
@@ -120,7 +120,10 @@ extension CitiesPVC: UIPageViewControllerDataSource, UIPageViewControllerDelegat
         }
         return nil
     }
+}
 
+// MARK: - UIPageViewControllerDelegate
+extension CitiesPVC: UIPageViewControllerDelegate {
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
           guard completed else { return }
           guard let currentVC = pageViewController.viewControllers?.first as? CityVC else {

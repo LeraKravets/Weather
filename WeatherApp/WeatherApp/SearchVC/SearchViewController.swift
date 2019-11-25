@@ -53,53 +53,12 @@ class SearchViewController: UIViewController {
             self?.resultsTableView.reloadData()
         }
     }
-
-    // MARK: - Parsing local JSON file   "city.list.min"
-
-//    func loudJsonData(filename fileName: String)  {
-//        DispatchQueue.global().async {
-//            guard let url = Bundle.main.url(forResource: fileName, withExtension: "json") else { fatalError() }
-//            do {
-//                let jsonData = try Data(contentsOf: url)
-//                guard
-//                    let json = try JSONSerialization.jsonObject(with: jsonData) as? [[String: Any]]
-//                else { return }
-//
-//                DispatchQueue.main.async {
-//                    self.citiesInfo = json
-//                    self.citiesNameArr = self.citiesInfo?.compactMap({ $0["name"] }) as? [String] ?? []
-//                    self.resultsTableView.reloadData()
-//                }
-//
-//            } catch {
-//                print(error)
-//            }
-//
-//        }
-//    }
-
-//    func loudJsonData(complitionHandler: @escaping ([[String: Any]]?) -> Void) {
-//        guard let url = Bundle.main.url(forResource: "city.list.min", withExtension: "json") else { fatalError() }
-//        do {
-//            let jsonData = try Data(contentsOf: url)
-//            guard let json = try JSONSerialization.jsonObject(with: jsonData) as? [[String: Any]] else { return }
-//            complitionHandler(json)
-//        }
-//        catch {
-//            print(error)
-//        }
-//    }
 }
 
 // MARK: - UITableViewDataSource
 extension SearchViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        if searching {
-//            return searchCity.count
-//        } else {
-//            return citiesNameArr.count
-//        }
         searchResults.count
 
     }
@@ -108,17 +67,6 @@ extension SearchViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
         cell.textLabel?.text = searchResults[indexPath.row]
         return cell
-
-//        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellID) as? SearchTableViewCell
-//            else {
-//                fatalError("Can't find cell with id: \(cellID)")
-//        }
-//        if searching {
-//            cell.searchCityLable.text = searchCity[indexPath.row]
-//        } else {
-//            cell.searchCityLable.text = citiesNameArr[indexPath.row]
-//        }
-//        return cell
     }
 }
 
@@ -126,11 +74,6 @@ extension SearchViewController: UITableViewDataSource {
 extension SearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.searchDelegate?.didSelectCity(cityName: searchResults[indexPath.row])
-//        if searching {
-//            self.searchDelegate?.didSelectCity(cityName: searchCity[indexPath.row])
-//        } else {
-//            self.searchDelegate?.didSelectCity(cityName: citiesNameArr[indexPath.row])
-//        }
         dismiss(animated: true, completion: nil)
     }
 }
@@ -139,18 +82,8 @@ extension SearchViewController: UITableViewDelegate {
 extension SearchViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         doSearch(searchText)
-//        searchCity = searchResults.filter({ $0.prefix(searchText.count) == searchText })
-//        resultsTableView.reloadData()
-//        searchCity = citiesNameArr.filter({ $0.prefix(searchText.count) == searchText })
-//        searching = true
-//        resultsTableView.reloadData()
     }
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         dismiss(animated: true, completion: nil)
     }
 }
-
-//extension SearchViewController: UISearchResultsUpdating {
-//  func updateSearchResults(for searchController: UISearchController) {
-//  }
-//}

@@ -63,8 +63,6 @@ class CityVC: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        setOfDailyWeather = city?.dailyWeathert as? Set<DailyWeather>
-//        arrayOfDailyWeather = setOfDailyWeather?.sorted(by: { $0.date < $1.date })
     }
 }
 
